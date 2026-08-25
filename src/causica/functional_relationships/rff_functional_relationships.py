@@ -1,10 +1,11 @@
 import math
-from typing import Optional
 
 import torch
 from tensordict import TensorDict
 
-from causica.functional_relationships.functional_relationships import FunctionalRelationships
+from causica.functional_relationships.functional_relationships import (
+    FunctionalRelationships,
+)
 
 
 class RFFFunctionalRelationships(FunctionalRelationships):
@@ -20,10 +21,10 @@ class RFFFunctionalRelationships(FunctionalRelationships):
         shapes: dict[str, torch.Size],
         initial_random_features: torch.Tensor,
         initial_coefficients: torch.Tensor,
-        initial_bias: Optional[torch.Tensor] = None,
-        initial_length_scales: Optional[torch.Tensor] = None,
-        initial_output_scales: Optional[torch.Tensor] = None,
-        initial_angles: Optional[torch.Tensor] = None,
+        initial_bias: torch.Tensor | None = None,
+        initial_length_scales: torch.Tensor | None = None,
+        initial_output_scales: torch.Tensor | None = None,
+        initial_angles: torch.Tensor | None = None,
         trainable: bool = False,
     ) -> None:
         """

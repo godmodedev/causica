@@ -2,7 +2,7 @@
 Wrapper around torch.distributions.transforms to allow for joint transforms on TensorDicts.
 """
 import weakref
-from typing import Any, Generic, Optional, TypeVar, Union
+from typing import Any, Generic, TypeVar
 
 import torch
 from torch import nn
@@ -17,12 +17,12 @@ class _TransformRef(Generic[T_co]):
     Particularily used to allow subclasses to refine the inverse type.
     """
 
-    weak_ref: Optional[weakref.ReferenceType[T_co]]
+    weak_ref: weakref.ReferenceType[T_co] | None
 
     def __init__(self, obj: T_co):
         self.weak_ref = weakref.ref(obj)
 
-    def __call__(self) -> Optional[T_co]:
+    def __call__(self) -> T_co | None:
         return self.weak_ref() if self.weak_ref is not None else None
 
 
@@ -58,7 +58,7 @@ class TypedTransform(Generic[X, Y], Transform):
 
     @property
     def inv(self) -> "TypedTransform[Y, X]":
-        inv: Optional[TypedTransform[Y, X]] = None
+        inv: TypedTransform[Y, X] | None = None
         match self._inv:
             case _TransformRef():
                 inv = self._inv()
@@ -66,7 +66,7 @@ class TypedTransform(Generic[X, Y], Transform):
                 inv = self._inv
         if inv is None:
             inv = _TypedInverseTransform[Y, X](self)
-            self._inv: Union[_TransformRef[_TypedInverseTransform[Y, X]], TypedTransform[Y, X]] = _TransformRef[
+            self._inv: _TransformRef[_TypedInverseTransform[Y, X]] | TypedTransform[Y, X] = _TransformRef[
                 _TypedInverseTransform[Y, X]
             ](inv)
         return inv
@@ -92,7 +92,7 @@ class TransformModule(Generic[X, Y], TypedTransform[X, Y], nn.Module):
 
     @property
     def inv(self) -> "TransformModule[Y, X]":
-        inv: Optional[TransformModule[Y, X]] = None
+        inv: TransformModule[Y, X] | None = None
         match self._inv:
             case _TransformRef():
                 inv = self._inv()
@@ -100,7 +100,7 @@ class TransformModule(Generic[X, Y], TypedTransform[X, Y], nn.Module):
                 inv = self._inv
         if inv is None:
             inv = _InverseTransformModule[Y, X](self)
-            self._inv: Union[_TransformRef[_InverseTransformModule[Y, X]], TransformModule[Y, X]] = _TransformRef[
+            self._inv: _TransformRef[_InverseTransformModule[Y, X]] | TransformModule[Y, X] = _TransformRef[
                 _InverseTransformModule[Y, X]
             ](inv)
         return inv

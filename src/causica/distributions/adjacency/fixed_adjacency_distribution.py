@@ -1,6 +1,8 @@
 import torch
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 
 
 class FixedAdjacencyDistribution(AdjacencyDistribution):

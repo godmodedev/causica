@@ -2,14 +2,20 @@
 import functools
 import os
 from collections import defaultdict
+from collections.abc import Iterable
 from functools import partial
-from typing import Any, Iterable, Optional, Union
+from typing import Any
 
 import torch
 from tensordict import TensorDict, TensorDictBase
 from torch.utils.data import DataLoader
 
-from causica.datasets.causica_dataset_format import CAUSICA_DATASETS_PATH, DataEnum, VariablesMetadata, load_data
+from causica.datasets.causica_dataset_format import (
+    CAUSICA_DATASETS_PATH,
+    DataEnum,
+    VariablesMetadata,
+    load_data,
+)
 from causica.datasets.interventional_data import CounterfactualData, InterventionData
 from causica.datasets.normalization import (
     FitNormalizerType,
@@ -43,8 +49,8 @@ class VariableSpecDataModule(DECIDataModule):
         root_path: str,
         batch_size: int = 128,
         dataset_name: str = "anonymous_dataset",
-        standardize: Union[bool, Iterable[str]] = False,
-        log_normalize: Union[bool, Iterable[str]] = False,
+        standardize: bool | Iterable[str] = False,
+        log_normalize: bool | Iterable[str] = False,
         exclude_standardization: Iterable[str] = tuple(),
         exclude_log_normalization: Iterable[str] = tuple(),
         default_offset: float = 1.0,
@@ -98,7 +104,7 @@ class VariableSpecDataModule(DECIDataModule):
         self.fit_normalizer_on_test_sets = fit_normalizer_on_test_sets
 
         self.use_normalizer = standardize or log_normalize
-        self.normalizer: Optional[Normalizer] = None
+        self.normalizer: Normalizer | None = None
         self._dataset_train: TensorDictBase
         self._dataset_test: TensorDictBase
         self._dataset_valid: TensorDictBase
@@ -316,7 +322,7 @@ class CSuiteDataModule(VariableSpecDataModule):
         dataset_path: str = CAUSICA_DATASETS_PATH,
         load_counterfactual: bool = False,
         load_interventional: bool = False,
-        standardize: Union[bool, Iterable[str]] = False,
+        standardize: bool | Iterable[str] = False,
     ):
         super().__init__(
             root_path=os.path.join(dataset_path, dataset_name),

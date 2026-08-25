@@ -3,7 +3,10 @@ from dataclasses import dataclass, field
 import torch
 from tensordict import TensorDictBase
 
-from causica.datasets.causica_dataset_format import CounterfactualWithEffects, InterventionWithEffects
+from causica.datasets.causica_dataset_format import (
+    CounterfactualWithEffects,
+    InterventionWithEffects,
+)
 
 
 @dataclass

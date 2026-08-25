@@ -1,6 +1,6 @@
 import random
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field
-from typing import Callable, Iterable, Optional, Union
 
 import pytorch_lightning as pl
 import torch
@@ -48,7 +48,7 @@ class CounterfactualDataNoise:
 def sample_intervention_dict(
     tensordict_data: TensorDict,
     treatment: str | None = None,
-    proportion_treatment: Optional[float] = None,
+    proportion_treatment: float | None = None,
     type_treatment: str = "quantile",
 ) -> TensorDict:
     """Sample an intervention from a given SEM.
@@ -102,7 +102,7 @@ def sample_counterfactual(
     factual_data: TensorDict,
     noise: TensorDict,
     treatment: str | None = None,
-    proportion_treatment: Optional[float] = None,
+    proportion_treatment: float | None = None,
 ) -> CounterfactualDataNoise:
     """Sample an intervention and it's sample mean from a given SEM.
 
@@ -275,7 +275,7 @@ class SyntheticDataModule(pl.LightningDataModule):
 
     def __init__(
         self,
-        sem_samplers: Union[list[SEMSampler], Callable[[], list[SEMSampler]]],
+        sem_samplers: list[SEMSampler] | Callable[[], list[SEMSampler]],
         train_batch_size: int,
         test_batch_size: int,
         sample_dataset_size: int,

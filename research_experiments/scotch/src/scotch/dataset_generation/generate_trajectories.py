@@ -1,4 +1,3 @@
-from typing import Tuple
 
 import torch
 import torchsde
@@ -17,7 +16,7 @@ def generate_and_return_trajectories(
     dt: float = 1e-3,
     return_raw: bool = False,
     **kwargs,
-) -> Tuple[Tensor, TensorDict, torchsde.BrownianInterval]:
+) -> tuple[Tensor, TensorDict, torchsde.BrownianInterval]:
     """Generate synthetic trajectories.
         z0 = torch.full(size=(n, state_size), fill_value=0.0, device=device)
     Args:

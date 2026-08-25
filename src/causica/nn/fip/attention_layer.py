@@ -1,5 +1,4 @@
 import math
-from typing import Optional
 
 import torch
 from torch import nn
@@ -25,7 +24,7 @@ def compute_score_attention(
     queries: torch.Tensor,
     keys: torch.Tensor,
     d_k: float,
-    mask: Optional[torch.Tensor] = None,
+    mask: torch.Tensor | None = None,
     cost_type: str = "dot_product",
 ) -> torch.Tensor:
     """
@@ -60,7 +59,7 @@ def scaled_dot_product_attention(
     queries: torch.Tensor,
     keys: torch.Tensor,
     d_k: float,
-    mask: Optional[torch.Tensor] = None,
+    mask: torch.Tensor | None = None,
     cost_type: str = "dot_product",
 ) -> torch.Tensor:
 
@@ -87,7 +86,7 @@ def causal_scaled_dot_product_attention(
     queries: torch.Tensor,
     keys: torch.Tensor,
     d_k: float,
-    mask: Optional[torch.Tensor] = None,
+    mask: torch.Tensor | None = None,
     cost_type: str = "dot_product",
 ) -> torch.Tensor:
     r"""
@@ -136,7 +135,7 @@ class MultiHeadAttention(nn.Module):
         d_model: int,
         num_heads: int,
         max_seq_length: int,
-        dim_key: Optional[int] = None,
+        dim_key: int | None = None,
         attn_type: str = "causal",
         cost_type: str = "dot_product",
     ):
@@ -192,7 +191,7 @@ class MultiHeadAttention(nn.Module):
         return inp.view(*all_dims[:-2], self.dim_latent)
 
     def compute_attn(
-        self, queries: torch.Tensor, keys: torch.Tensor, mask: Optional[torch.Tensor] = None
+        self, queries: torch.Tensor, keys: torch.Tensor, mask: torch.Tensor | None = None
     ) -> torch.Tensor:
         """
         Args:
@@ -213,7 +212,7 @@ class MultiHeadAttention(nn.Module):
         return self.attn(queries, keys, self.d_k, mask=mask, cost_type=self.cost_type)
 
     def compute_cost(
-        self, queries: torch.Tensor, keys: torch.Tensor, mask: Optional[torch.Tensor] = None
+        self, queries: torch.Tensor, keys: torch.Tensor, mask: torch.Tensor | None = None
     ) -> torch.Tensor:
         """
         Args:
@@ -233,7 +232,7 @@ class MultiHeadAttention(nn.Module):
         return compute_score_attention(queries, keys, self.d_k, mask=mask, cost_type=self.cost_type)
 
     def forward(
-        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor] = None
+        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: torch.Tensor | None = None
     ) -> torch.Tensor:
         """
         Args:

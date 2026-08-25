@@ -1,11 +1,14 @@
 import math
 from collections import defaultdict
-from typing import Iterable
+from collections.abc import Iterable
 
 import torch
 from tensordict import TensorDict
 
-from causica.datasets.causica_dataset_format import CounterfactualWithEffects, InterventionWithEffects
+from causica.datasets.causica_dataset_format import (
+    CounterfactualWithEffects,
+    InterventionWithEffects,
+)
 from causica.sem.structural_equation_model import SEM, ate, ite
 
 

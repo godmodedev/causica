@@ -1,5 +1,6 @@
 import logging
-from typing import Any, Optional, Sequence
+from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
 import pytorch_lightning as pl
@@ -12,7 +13,9 @@ from torchmetrics.classification import Accuracy, F1Score
 from torchmetrics.regression import MeanAbsoluteError, MeanAbsolutePercentageError
 from torchmetrics.wrappers import MultitaskWrapper
 
-from causica.datasets.normalization import infer_compatible_log_normalizer_from_checkpoint
+from causica.datasets.normalization import (
+    infer_compatible_log_normalizer_from_checkpoint,
+)
 from causica.datasets.tensordict_utils import expand_tensordict_groups
 from causica.graph.evaluation_metrics import adjacency_f1, orientation_f1
 from causica.lightning.modules.deci_module import DECIModule
@@ -40,7 +43,7 @@ class ExampleDECIModule(DECIModule):
         """Ensure correct loading of the normalizer from the checkpoint."""
         self.normalizer = infer_compatible_log_normalizer_from_checkpoint(checkpoint["state_dict"])
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         if self.is_setup:
             return  # Already setup
 
@@ -137,7 +140,7 @@ class ExampleDECIModule(DECIModule):
         batch_idx: int,
         log_prefix: str = "metrics",
         dataset_size: torch.Size = torch.Size([1]),
-        metrics_wrapper_dict: Optional[MultitaskWrapper] = None,
+        metrics_wrapper_dict: MultitaskWrapper | None = None,
     ):
         """Evaluate the log prob of the model for one batch using multiple graph samples.
         Args:

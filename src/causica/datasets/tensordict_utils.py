@@ -1,4 +1,5 @@
-from typing import Iterable, Optional, TypeVar
+from collections.abc import Iterable
+from typing import TypeVar
 
 import pandas as pd
 import torch
@@ -9,7 +10,7 @@ TD = TypeVar("TD", bound=TensorDictBase)
 
 def convert_one_hot(
     data: TD,
-    one_hot_sizes: Optional[dict[str, int]] = None,
+    one_hot_sizes: dict[str, int] | None = None,
 ) -> TD:
     """
     Args:

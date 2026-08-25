@@ -10,7 +10,9 @@ We should consider using the Pyro implementation.
 import torch
 import torch.distributions as td
 
-from causica.distributions.noise.spline.bayesiains_nsf_rqs import unconstrained_rational_quadratic_spline
+from causica.distributions.noise.spline.bayesiains_nsf_rqs import (
+    unconstrained_rational_quadratic_spline,
+)
 
 DEFAULT_MIN_BIN_WIDTH = 1e-3
 DEFAULT_MIN_BIN_HEIGHT = 1e-3

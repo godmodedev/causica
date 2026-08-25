@@ -1,5 +1,5 @@
 import abc
-from typing import Mapping
+from collections.abc import Mapping
 
 import torch
 import torch.distributions as td

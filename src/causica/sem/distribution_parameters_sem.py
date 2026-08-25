@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 from tensordict import TensorDict
@@ -28,7 +27,7 @@ class DistributionParametersSEM(SEM):
         graph: torch.Tensor,
         noise_dist: JointNoiseModule,
         func: FunctionalRelationships,
-        log_func_rescale: Optional[FunctionalRelationships] = None,
+        log_func_rescale: FunctionalRelationships | None = None,
     ):
         """
         Args:

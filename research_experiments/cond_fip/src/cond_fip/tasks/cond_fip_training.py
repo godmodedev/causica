@@ -1,11 +1,13 @@
 import pytorch_lightning as pl
 import torch
+from cond_fip.models.amortized_models import AmortizedEncoderDecoder
+from cond_fip.tasks.encoder_training import EncoderTraining
 from ema_pytorch import EMA
 from torch import nn, optim
 
-from causica.functional_relationships.linear_functional_relationships import LinearFunctionalRelationships
-from cond_fip.models.amortized_models import AmortizedEncoderDecoder
-from cond_fip.tasks.encoder_training import EncoderTraining
+from causica.functional_relationships.linear_functional_relationships import (
+    LinearFunctionalRelationships,
+)
 
 
 class CondFiPTraining(pl.LightningModule):

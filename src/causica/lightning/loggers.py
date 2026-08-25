@@ -1,4 +1,4 @@
-from typing import Sequence
+from collections.abc import Sequence
 
 from lightning_utilities.core.rank_zero import rank_zero_only
 from mlflow.entities import Metric, Param, RunTag

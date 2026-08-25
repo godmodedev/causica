@@ -1,8 +1,12 @@
 import torch
 from tensordict import TensorDict
 
-from causica.functional_relationships.functional_relationships import FunctionalRelationships
-from causica.functional_relationships.temporal_functional_relationships import TemporalEmbedFunctionalRelationships
+from causica.functional_relationships.functional_relationships import (
+    FunctionalRelationships,
+)
+from causica.functional_relationships.temporal_functional_relationships import (
+    TemporalEmbedFunctionalRelationships,
+)
 
 
 class DoFunctionalRelationships(FunctionalRelationships):

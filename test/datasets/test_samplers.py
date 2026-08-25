@@ -20,7 +20,7 @@ def test_subset_batch_sampler_ordered_drop_last():
 def test_subset_batch_sampler_shuffled():
     sampler = SubsetBatchSampler([2, 3, 5], 2, shuffle=True)
     samples = list(sampler)
-    sorted_samples = list(sorted(itertools.chain.from_iterable(samples)))
+    sorted_samples = sorted(itertools.chain.from_iterable(samples))
     assert sorted_samples == list(range(10))
     assert len(samples) == len(sampler)
 

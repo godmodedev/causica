@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -80,7 +79,7 @@ class CategoricalNoiseModule(NoiseModule[CategoricalNoise]):
 
         self.base_logits = nn.Parameter(init_base_logits)
 
-    def forward(self, x: Optional[torch.Tensor] = None) -> CategoricalNoise:
+    def forward(self, x: torch.Tensor | None = None) -> CategoricalNoise:
         if x is None:
             x = torch.zeros_like(self.base_logits)
         return CategoricalNoise(delta_logits=x, base_logits=self.base_logits)

@@ -1,13 +1,16 @@
-import copy
 
 import numpy as np
 import torch
 from lvdm.common import extract_into_tensor, noise_like
-from lvdm.models.utils_diffusion import make_ddim_sampling_parameters, make_ddim_timesteps, rescale_noise_cfg
+from lvdm.models.utils_diffusion import (
+    make_ddim_sampling_parameters,
+    make_ddim_timesteps,
+    rescale_noise_cfg,
+)
 from tqdm import tqdm
 
 
-class DDIMSampler(object):
+class DDIMSampler:
     def __init__(self, model, schedule="linear", **kwargs):
         super().__init__()
         self.model = model
@@ -171,7 +174,7 @@ class DDIMSampler(object):
             timesteps = self.ddim_timesteps[:subset_end]
 
         intermediates = {"x_inter": [img], "pred_x0": [img]}
-        time_range = reversed(range(0, timesteps)) if ddim_use_original_steps else np.flip(timesteps)
+        time_range = reversed(range(timesteps)) if ddim_use_original_steps else np.flip(timesteps)
         total_steps = timesteps if ddim_use_original_steps else timesteps.shape[0]
         if verbose:
             iterator = tqdm(time_range, desc="DDIM Sampler", total=total_steps)

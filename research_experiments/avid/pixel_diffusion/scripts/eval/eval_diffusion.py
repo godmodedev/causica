@@ -1,7 +1,6 @@
 import pytorch_lightning as pl
 import torch
 from avid_utils.eval import get_run_logger
-
 from dwma.lightning.cli.cli import LightningCLIDiffusion
 from dwma.lightning.data_modules.procgen_data import ProcgenDataModule
 from dwma.lightning.modules.diffusion_module import DiffusionModule

@@ -1,11 +1,11 @@
 # pylint: disable=E1123,E1120
-from typing import Any, Dict
+from typing import Any
 
 import tensorflow as tf
 from octo.data.utils.data_utils import NormalizationType
 
 
-def droid_dataset_transform(trajectory: Dict[str, Any]) -> Dict[str, Any]:
+def droid_dataset_transform(trajectory: dict[str, Any]) -> dict[str, Any]:
     pos_rot = trajectory["action_dict"]["cartesian_position"]
     last_element = tf.expand_dims(pos_rot[-1], axis=0)  # repeat last element to keep action length consistent
     pos_rot = tf.concat([pos_rot, last_element], axis=0)

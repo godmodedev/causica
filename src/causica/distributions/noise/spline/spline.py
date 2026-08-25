@@ -1,11 +1,12 @@
-from typing import Optional, Union
 
 import torch
 import torch.distributions as td
 from torch import nn
 
 from causica.distributions.noise.noise import IndependentNoise, Noise, NoiseModule
-from causica.distributions.noise.spline.rational_quadratic_transform import PiecewiseRationalQuadraticTransform
+from causica.distributions.noise.spline.rational_quadratic_transform import (
+    PiecewiseRationalQuadraticTransform,
+)
 
 # Ordered inputs to `_create_composite_layer`
 SplineParams = tuple[torch.Tensor, ...]
@@ -21,7 +22,7 @@ class SplineNoise(td.TransformedDistribution, Noise):
         self,
         base_loc: torch.Tensor,
         base_scale: torch.Tensor,
-        spline_transforms: list[Union[td.AffineTransform, td.ComposeTransform]],
+        spline_transforms: list[td.AffineTransform | td.ComposeTransform],
     ):
         """
         Args:
@@ -110,8 +111,8 @@ class CompositeSplineLayer(nn.Module):
         self,
         init_loc: torch.Tensor,
         init_log_scale: torch.Tensor,
-        init_knot_locations: Optional[torch.Tensor] = None,
-        init_derivatives: Optional[torch.Tensor] = None,
+        init_knot_locations: torch.Tensor | None = None,
+        init_derivatives: torch.Tensor | None = None,
     ):
         """
         Args:
@@ -176,7 +177,7 @@ class SplineNoiseModule(NoiseModule[IndependentNoise[SplineNoise]]):
         self.register_buffer("base_loc", torch.zeros(dim))
         self.register_buffer("base_scale", torch.ones(dim))
 
-    def forward(self, x: Optional[torch.Tensor] = None) -> IndependentNoise[SplineNoise]:
+    def forward(self, x: torch.Tensor | None = None) -> IndependentNoise[SplineNoise]:
         transforms = [spline_layer() for spline_layer in self.composite_spline_layers]
         if x is not None:
             transforms.append(td.AffineTransform(loc=x, scale=torch.ones_like(x, device=x.device)))

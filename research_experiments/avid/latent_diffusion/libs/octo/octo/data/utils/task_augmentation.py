@@ -3,6 +3,7 @@ Contains basic logic for randomly zero-ing out keys in the task specification.
 """
 
 import tensorflow as tf
+
 from octo.data.utils.data_utils import to_padding
 
 

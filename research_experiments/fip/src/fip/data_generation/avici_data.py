@@ -5,12 +5,12 @@ from enum import Enum
 
 import numpy as np
 import torch
-
-from causica.distributions.transforms import TensorToTensorDictTransform
-from causica.sem.distribution_parameters_sem import DistributionParametersSEM
 from fip.data_generation.config_data import LinearConfig, RFFConfig, SFConfig
 from fip.data_generation.sem_factory import SemSamplerFactory
 from fip.data_modules.synthetic_data_module import sample_counterfactual
+
+from causica.distributions.transforms import TensorToTensorDictTransform
+from causica.sem.distribution_parameters_sem import DistributionParametersSEM
 
 
 class NoiseEnum(Enum):

@@ -1,7 +1,5 @@
 import os
-from contextlib import contextmanager
 
-import numpy as np
 import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
@@ -92,7 +90,7 @@ class AutoencoderKL(pl.LightningModule):
         for k in keys:
             for ik in ignore_keys:
                 if k.startswith(ik):
-                    print("Deleting key {} from state_dict.".format(k))
+                    print(f"Deleting key {k} from state_dict.")
                     del sd[k]
         self.load_state_dict(sd, strict=False)
         # self.load_state_dict(sd, strict=True)

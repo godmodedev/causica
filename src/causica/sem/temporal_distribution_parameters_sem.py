@@ -3,7 +3,10 @@ from tensordict import TensorDict, TensorDictBase
 
 from causica.datasets.tensordict_utils import expand_td_with_batch_shape
 from causica.distributions import JointNoiseModule
-from causica.functional_relationships import DoFunctionalRelationships, TemporalEmbedFunctionalRelationships
+from causica.functional_relationships import (
+    DoFunctionalRelationships,
+    TemporalEmbedFunctionalRelationships,
+)
 from causica.sem.structural_equation_model import SEM
 
 

@@ -1,7 +1,10 @@
 import pytest
 import torch
 
-from causica.distributions.adjacency.gibbs_dag_prior import ExpertGraphContainer, GibbsDAGPrior
+from causica.distributions.adjacency.gibbs_dag_prior import (
+    ExpertGraphContainer,
+    GibbsDAGPrior,
+)
 
 
 def test_expert_graph_dataclass():

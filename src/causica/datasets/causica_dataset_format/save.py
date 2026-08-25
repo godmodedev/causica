@@ -1,7 +1,8 @@
 import dataclasses
 import json
 import os
-from typing import Any, Callable, Iterable, Optional
+from collections.abc import Callable, Iterable
+from typing import Any
 
 import fsspec
 import numpy as np
@@ -132,7 +133,7 @@ def intervention_data_to_dict(
 
 def counterfactual_data_to_dict(
     counterfactual: CounterfactualData,
-    reference: Optional[CounterfactualData],
+    reference: CounterfactualData | None,
     variables_metadata: VariablesMetadata,
     effect_idx_names: Iterable[str] | None = None,
 ) -> dict[str, np.ndarray | list[int] | None]:

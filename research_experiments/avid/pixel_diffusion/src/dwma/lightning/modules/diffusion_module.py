@@ -3,6 +3,10 @@ import torch
 import yaml
 from avid_utils.image import preprocess_images, revert_preprocess_images
 from avid_utils.metrics import FID, FVD, LPIPS, MSE, PSNR, SSIM, ActionAccuracy
+from dwma.lightning.modules.classifier_module import ClassifierModule
+from dwma.models.control_net import ControlNetSmaller
+from dwma.models.diffusion_control_net import GaussianDiffusionWithControlNet
+from dwma.models.video_diffusion_pytorch.diffusion import GaussianDiffusion
 from einops import rearrange
 from ema_pytorch import EMA
 from pytorch_lightning.cli import instantiate_module
@@ -10,11 +14,6 @@ from pytorch_lightning.loggers import WandbLogger
 from pytorch_lightning.utilities import rank_zero_only
 from torch import nn
 from torch.optim import Adam
-
-from dwma.lightning.modules.classifier_module import ClassifierModule
-from dwma.models.control_net import ControlNetSmaller
-from dwma.models.diffusion_control_net import GaussianDiffusionWithControlNet
-from dwma.models.video_diffusion_pytorch.diffusion import GaussianDiffusion
 
 
 class DiffusionModule(pl.LightningModule):

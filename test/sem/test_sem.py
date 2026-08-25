@@ -9,7 +9,11 @@ from causica.distributions.noise.joint import ContinuousNoiseDist
 from causica.functional_relationships import LinearFunctionalRelationships
 from causica.sem.distribution_parameters_sem import DistributionParametersSEM
 
-from . import create_heteroscedastic_rffgauss_sem, create_lingauss_sem, create_rffgauss_sem
+from . import (
+    create_heteroscedastic_rffgauss_sem,
+    create_lingauss_sem,
+    create_rffgauss_sem,
+)
 
 
 @pytest.fixture(name="two_variable_dict")

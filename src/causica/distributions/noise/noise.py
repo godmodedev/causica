@@ -1,5 +1,5 @@
 import abc
-from typing import Generic, Optional, TypeVar
+from typing import Generic, TypeVar
 
 import torch
 import torch.distributions as td
@@ -9,7 +9,7 @@ from causica.distributions.distribution_module import DistributionModule
 SampleType = TypeVar("SampleType")
 
 
-class Noise(Generic[SampleType], abc.ABC, td.Distribution):
+class Noise(td.Distribution, Generic[SampleType], abc.ABC):
     """
     Extend Distributions to allow the noise (usually unparametrized) to be extracted from samples and vice versa.
 
@@ -42,7 +42,7 @@ class Noise(Generic[SampleType], abc.ABC, td.Distribution):
 BaseNoiseType_co = TypeVar("BaseNoiseType_co", bound=Noise, covariant=True)
 
 
-class IndependentNoise(Generic[BaseNoiseType_co], td.Independent, Noise[torch.Tensor]):
+class IndependentNoise(td.Independent, Generic[BaseNoiseType_co], Noise[torch.Tensor]):
     """Like `td.Idenpendent` but also forwards `Noise` specific methods."""
 
     base_dist: BaseNoiseType_co
@@ -51,7 +51,7 @@ class IndependentNoise(Generic[BaseNoiseType_co], td.Independent, Noise[torch.Te
         self,
         base_distribution: BaseNoiseType_co,
         reinterpreted_batch_ndims: int,
-        validate_args: Optional[bool] = None,
+        validate_args: bool | None = None,
     ):
         super().__init__(
             base_distribution=base_distribution,

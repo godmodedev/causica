@@ -1,5 +1,5 @@
 import abc
-from typing import Iterable, Optional, Sequence
+from collections.abc import Iterable, Sequence
 
 import torch
 import torch.distributions as dist
@@ -160,7 +160,7 @@ def ite(
     factual_data: TensorDict,
     intervention_a: TensorDict,
     intervention_b: TensorDict,
-    effects: Optional[Iterable[str]] = None,
+    effects: Iterable[str] | None = None,
 ) -> TensorDict:
     """Calculate ITE of intervention A and B on some factual data for a list of effects.
 
@@ -200,7 +200,7 @@ def ate(
     sem: SEM,
     intervention_a: TensorDict,
     intervention_b: TensorDict,
-    effects: Optional[Iterable[str]] = None,
+    effects: Iterable[str] | None = None,
     num_samples: int = 1000,
 ) -> TensorDict:
     """Calculate the ATE of intervention A and B for a list of effects.

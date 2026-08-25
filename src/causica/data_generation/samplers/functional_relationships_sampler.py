@@ -1,17 +1,21 @@
 from __future__ import annotations
 
-from typing import Optional
-
 import torch
 import torch.distributions as td
 
 from causica.data_generation.samplers.sampler import Sampler
-from causica.functional_relationships.functional_relationships import FunctionalRelationships
+from causica.functional_relationships.functional_relationships import (
+    FunctionalRelationships,
+)
 from causica.functional_relationships.heteroscedastic_rff_functional_relationships import (
     HeteroscedasticRFFFunctionalRelationships,
 )
-from causica.functional_relationships.linear_functional_relationships import LinearFunctionalRelationships
-from causica.functional_relationships.rff_functional_relationships import RFFFunctionalRelationships
+from causica.functional_relationships.linear_functional_relationships import (
+    LinearFunctionalRelationships,
+)
+from causica.functional_relationships.rff_functional_relationships import (
+    RFFFunctionalRelationships,
+)
 
 
 class FunctionalRelationshipsSampler(Sampler[FunctionalRelationships]):
@@ -30,7 +34,7 @@ class LinearRelationshipsSampler(FunctionalRelationshipsSampler):
         self,
         scale_dist: td.Distribution,
         shapes_dict: dict[str, torch.Size],
-        bias_dist: Optional[td.Distribution] = None,
+        bias_dist: td.Distribution | None = None,
     ):
         super().__init__(shapes_dict)
         self.scale_dist = scale_dist
@@ -57,10 +61,10 @@ class RFFFunctionalRelationshipsSampler(FunctionalRelationshipsSampler):
         rf_dist: td.Distribution,
         coeff_dist: td.Distribution,
         shapes_dict: dict[str, torch.Size],
-        bias_dist: Optional[td.Distribution] = None,
-        length_dist: Optional[td.Distribution] = None,
-        out_dist: Optional[td.Distribution] = None,
-        angle_dist: Optional[td.Distribution] = None,
+        bias_dist: td.Distribution | None = None,
+        length_dist: td.Distribution | None = None,
+        out_dist: td.Distribution | None = None,
+        angle_dist: td.Distribution | None = None,
     ):
         super().__init__(shapes_dict)
         self.bias_dist = bias_dist
@@ -100,10 +104,10 @@ class HeteroscedasticRFFFunctionalRelationshipsSampler(FunctionalRelationshipsSa
         rf_dist: td.Distribution,
         coeff_dist: td.Distribution,
         shapes_dict: dict[str, torch.Size],
-        bias_dist: Optional[td.Distribution] = None,
-        length_dist: Optional[td.Distribution] | Optional[float] = None,
-        out_dist: Optional[td.Distribution] | Optional[float] = None,
-        angle_dist: Optional[td.Distribution] = None,
+        bias_dist: td.Distribution | None = None,
+        length_dist: td.Distribution | None | float = None,
+        out_dist: td.Distribution | None | float = None,
+        angle_dist: td.Distribution | None = None,
         log_scale: bool = False,
     ):
         """

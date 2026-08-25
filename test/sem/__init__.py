@@ -1,6 +1,11 @@
 import torch
 
-from causica.distributions import JointNoiseModule, Noise, NoiseModule, UnivariateNormalNoiseModule
+from causica.distributions import (
+    JointNoiseModule,
+    Noise,
+    NoiseModule,
+    UnivariateNormalNoiseModule,
+)
 from causica.functional_relationships import (
     HeteroscedasticRFFFunctionalRelationships,
     LinearFunctionalRelationships,

@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -80,7 +79,7 @@ class UnivariateLaplaceNoiseModule(NoiseModule[IndependentNoise[UnivariateLaplac
         self.log_scale = nn.Parameter(init_log_scale)
 
     def forward(
-        self, x: Optional[tuple[torch.Tensor, torch.Tensor] | torch.Tensor] = None
+        self, x: tuple[torch.Tensor, torch.Tensor] | torch.Tensor | None = None
     ) -> IndependentNoise[UnivariateLaplaceNoise]:
         """
         Generarate Independent noise module for the Laplace distribution.

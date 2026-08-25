@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -44,7 +43,7 @@ class GibbsDAGPrior(td.Distribution):
         self,
         num_nodes: int,
         sparsity_lambda: float,
-        expert_graph_container: Optional[ExpertGraphContainer] = None,
+        expert_graph_container: ExpertGraphContainer | None = None,
         context_length: int | None = None,
         **kwargs,
     ) -> None:

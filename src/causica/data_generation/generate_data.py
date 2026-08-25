@@ -2,8 +2,8 @@ import argparse
 import os
 import random
 import warnings
-from collections import defaultdict
-from typing import Counter, Sequence
+from collections import Counter, defaultdict
+from collections.abc import Sequence
 
 import fsspec
 import matplotlib.pyplot as plt
@@ -39,7 +39,11 @@ from causica.datasets.causica_dataset_format import (
 from causica.datasets.interventional_data import CounterfactualData, InterventionData
 from causica.datasets.tensordict_utils import expand_tensordict_groups
 from causica.datasets.variable_types import VariableTypeEnum
-from causica.distributions.adjacency import AdjacencyDistribution, ErdosRenyiDAGDistribution, FixedAdjacencyDistribution
+from causica.distributions.adjacency import (
+    AdjacencyDistribution,
+    ErdosRenyiDAGDistribution,
+    FixedAdjacencyDistribution,
+)
 from causica.sem.structural_equation_model import SEM
 
 try:

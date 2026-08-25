@@ -1,5 +1,4 @@
 import torch
-
 from dwma.lightning.cli.cli import LightningCLIDiffusion
 from dwma.lightning.data_modules.procgen_data import ProcgenDataModule
 from dwma.lightning.modules.diffusion_module import DiffusionModule

@@ -106,10 +106,10 @@ if __name__ == "__main__":
 
     subf = "norm" if args.normalize else "unnorm"
     ts = torch.load(
-        f"data/yeast_processed/{args.dimension}/{subf}/times_{args.num_time_points}_{str(args.missing_prob)}_{args.seed}.pt"
+        f"data/yeast_processed/{args.dimension}/{subf}/times_{args.num_time_points}_{args.missing_prob!s}_{args.seed}.pt"
     )
     training_data = torch.load(
-        f"data/yeast_processed/{args.dimension}/{subf}/data_{args.num_time_points}_{str(args.missing_prob)}_{args.seed}.pt"
+        f"data/yeast_processed/{args.dimension}/{subf}/data_{args.num_time_points}_{args.missing_prob!s}_{args.seed}.pt"
     )
     true_graph = torch.load(f"data/yeast_processed/{args.dimension}/{subf}/true_graph.pt").to("cuda")
 

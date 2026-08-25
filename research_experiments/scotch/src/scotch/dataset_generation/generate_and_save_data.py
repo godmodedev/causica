@@ -3,12 +3,13 @@ import os
 import sys
 from argparse import Namespace
 
-import pandas as pd
 import torch
 from scipy.io import loadmat
 from scotch.dataset_generation.example_sdes.lorenz_sde import Lorenz96SDE
 from scotch.dataset_generation.example_sdes.yeast_glycolysis import YeastGlycolysisSDE
-from scotch.dataset_generation.generate_trajectories import generate_and_return_trajectories
+from scotch.dataset_generation.generate_trajectories import (
+    generate_and_return_trajectories,
+)
 
 
 def subsample(ts, data, samp_every):
@@ -81,10 +82,10 @@ def save_data_and_graph_to_file(arguments, ts, training_data, true_graph):
         case "netsim":
             subf = "norm" if arguments.normalize else "unnorm"
             os.makedirs(f"data/netsim_processed_new/{subf}", exist_ok=True)
-            torch.save(ts, f"data/netsim_processed_new/{subf}/times_{str(arguments.missing_prob)}_{arguments.seed}.pt")
+            torch.save(ts, f"data/netsim_processed_new/{subf}/times_{arguments.missing_prob!s}_{arguments.seed}.pt")
             torch.save(
                 training_data,
-                f"data/netsim_processed_new/{subf}/data_{str(arguments.missing_prob)}_{arguments.seed}.pt",
+                f"data/netsim_processed_new/{subf}/data_{arguments.missing_prob!s}_{arguments.seed}.pt",
             )
             torch.save(true_graph, f"data/netsim_processed_new/{subf}/true_graph.pt")
         case "lorenz":
@@ -92,11 +93,11 @@ def save_data_and_graph_to_file(arguments, ts, training_data, true_graph):
             os.makedirs(f"data/lorenz96_processed/{arguments.dimension}/{subf}", exist_ok=True)
             torch.save(
                 ts,
-                f"data/lorenz96_processed/{arguments.dimension}/{subf}/times_{arguments.num_subsamp}_{str(arguments.missing_prob)}_{arguments.seed}.pt",
+                f"data/lorenz96_processed/{arguments.dimension}/{subf}/times_{arguments.num_subsamp}_{arguments.missing_prob!s}_{arguments.seed}.pt",
             )
             torch.save(
                 training_data,
-                f"data/lorenz96_processed/{arguments.dimension}/{subf}/data_{arguments.num_subsamp}_{str(arguments.missing_prob)}_{arguments.seed}.pt",
+                f"data/lorenz96_processed/{arguments.dimension}/{subf}/data_{arguments.num_subsamp}_{arguments.missing_prob!s}_{arguments.seed}.pt",
             )
             torch.save(true_graph, f"data/lorenz96_processed/{arguments.dimension}/{subf}/true_graph.pt")
         case "yeast":
@@ -104,11 +105,11 @@ def save_data_and_graph_to_file(arguments, ts, training_data, true_graph):
             os.makedirs(f"data/yeast_processed/{arguments.dimension}/{subf}", exist_ok=True)
             torch.save(
                 ts,
-                f"data/yeast_processed/{arguments.dimension}/{subf}/times_{arguments.num_subsamp}_{str(arguments.missing_prob)}_{arguments.seed}.pt",
+                f"data/yeast_processed/{arguments.dimension}/{subf}/times_{arguments.num_subsamp}_{arguments.missing_prob!s}_{arguments.seed}.pt",
             )
             torch.save(
                 training_data,
-                f"data/yeast_processed/{arguments.dimension}/{subf}/data_{arguments.num_subsamp}_{str(arguments.missing_prob)}_{arguments.seed}.pt",
+                f"data/yeast_processed/{arguments.dimension}/{subf}/data_{arguments.num_subsamp}_{arguments.missing_prob!s}_{arguments.seed}.pt",
             )
             torch.save(true_graph, f"data/yeast_processed/{arguments.dimension}/{subf}/true_graph.pt")
 

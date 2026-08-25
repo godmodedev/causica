@@ -1,7 +1,7 @@
 from collections import deque, namedtuple
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Optional, Tuple, Union
+from typing import Any
 
 import torch
 from dataclasses_json import dataclass_json
@@ -140,7 +140,7 @@ class AugLagLR:
 
         # Track whether auglag is disabled and the state of the loss when it was disabled
         self._disabled = False
-        self._disabled_loss_state: Optional[dict[str, Any]] = None
+        self._disabled_loss_state: dict[str, Any] | None = None
 
     def _init_new_inner_optimisation(self) -> None:
         """Init the hyperparameters for a new inner loop optimization."""
@@ -149,10 +149,10 @@ class AugLagLR:
         self.num_lr_updates = 0
         self.last_best_step = 0
         self.loss_tracker.clear()
-        self.loss_tracker_sum: Optional[torch.Tensor] = None
+        self.loss_tracker_sum: torch.Tensor | None = None
         self.step_counter = 0
 
-    def _is_inner_converged(self) -> Tuple[bool, AugLagInnerConvergenceReason]:
+    def _is_inner_converged(self) -> tuple[bool, AugLagInnerConvergenceReason]:
         """Check if the inner optimization loop has converged, based on maximum number of inner steps, number of lr updates.
 
         Returns:
@@ -176,7 +176,7 @@ class AugLagLR:
         # If none of the conditions were met, return False and NOT_CONVERGED
         return False, AugLagInnerConvergenceReason.NOT_CONVERGED
 
-    def _is_outer_converged(self) -> Tuple[bool, AugLagOuterConvergenceReason]:
+    def _is_outer_converged(self) -> tuple[bool, AugLagOuterConvergenceReason]:
         """Check if the outer loop has converged.
         Determined as converged if any of the below conditions are true. If `force_not_converged` is true, only (1) is
         checked.
@@ -225,7 +225,7 @@ class AugLagLR:
         """
         return self.last_best_step + self.config.lr_update_lag_best <= self.step_counter
 
-    def _update_lr(self, optimizer: Union[Optimizer, list[Optimizer]]):
+    def _update_lr(self, optimizer: Optimizer | list[Optimizer]):
         """Update the learning rate of the optimizer(s) based on the lr multiplicative factor.
 
         Args:
@@ -242,7 +242,7 @@ class AugLagLR:
             for param_group in optimizer.param_groups:
                 param_group["lr"] *= self.config.lr_factor
 
-    def reset_lr(self, optimizer: Union[Optimizer, list[Optimizer]]):
+    def reset_lr(self, optimizer: Optimizer | list[Optimizer]):
         """Reset the learning rate of individual param groups from lr init dictionary.
 
         Args:
@@ -290,8 +290,8 @@ class AugLagLR:
         loss.rho = torch.min(loss.rho, torch.full_like(loss.rho, self.config.safety_rho))
 
     def _is_auglag_converged(
-        self, optimizer: Union[Optimizer, list[Optimizer]], loss: AugLagLossCalculator
-    ) -> Tuple[bool, AugLagConvergenceReasonTuple]:
+        self, optimizer: Optimizer | list[Optimizer], loss: AugLagLossCalculator
+    ) -> tuple[bool, AugLagConvergenceReasonTuple]:
         """Checks if the inner and outer loops have converged. If inner loop is converged,
         it initilaizes the optimisation parameters for a new inner loop. If both are converged, it returns True.
 
@@ -378,11 +378,11 @@ class AugLagLR:
 
     def step(
         self,
-        optimizer: Union[Optimizer, list[Optimizer]],
+        optimizer: Optimizer | list[Optimizer],
         loss: AugLagLossCalculator,
         loss_value: torch.Tensor,
         lagrangian_penalty: torch.Tensor,
-    ) -> Tuple[bool, AugLagConvergenceReasonTuple]:
+    ) -> tuple[bool, AugLagConvergenceReasonTuple]:
         """The main update method to take one auglag inner step.
 
         Args:

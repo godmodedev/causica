@@ -4,13 +4,27 @@ import pytest
 import torch
 from tensordict import TensorDict
 
-from causica.datasets.causica_dataset_format import CAUSICA_DATASETS_PATH, DataEnum, load_data
+from causica.datasets.causica_dataset_format import (
+    CAUSICA_DATASETS_PATH,
+    DataEnum,
+    load_data,
+)
 from causica.datasets.tensordict_utils import tensordict_shapes
 from causica.datasets.variable_types import VariableTypeEnum
-from causica.distributions import ContinuousNoiseDist, JointNoiseModule, create_noise_modules
-from causica.functional_relationships.linear_functional_relationships import LinearFunctionalRelationships
+from causica.distributions import (
+    ContinuousNoiseDist,
+    JointNoiseModule,
+    create_noise_modules,
+)
+from causica.functional_relationships.linear_functional_relationships import (
+    LinearFunctionalRelationships,
+)
 from causica.sem.distribution_parameters_sem import DistributionParametersSEM
-from causica.training.evaluation import eval_ate_rmse, eval_intervention_likelihoods, eval_ite_rmse
+from causica.training.evaluation import (
+    eval_ate_rmse,
+    eval_intervention_likelihoods,
+    eval_ite_rmse,
+)
 
 
 def sem(data_dir: str) -> DistributionParametersSEM:

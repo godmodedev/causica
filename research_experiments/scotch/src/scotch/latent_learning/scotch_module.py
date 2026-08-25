@@ -1,4 +1,3 @@
-from typing import Optional, Union
 
 import numpy as np
 import torch
@@ -20,12 +19,19 @@ from scotch.scotch_utils.graph_metrics import (
     false_discovery_rate,
     true_positive_rate,
 )
-from scotch.sdes.scotch_sdes import AugmentedSCOTCHSDE, SCOTCHPriorSDE, swap_t_and_batch_dimensions
+from scotch.sdes.scotch_sdes import (
+    AugmentedSCOTCHSDE,
+    SCOTCHPriorSDE,
+    swap_t_and_batch_dimensions,
+)
 from sklearn.metrics import roc_auc_score
 from torch import Tensor, nn
 
 from causica.distributions import GibbsDAGPrior
-from causica.distributions.transforms import TensorToTensorDictTransform, shapes_to_slices
+from causica.distributions.transforms import (
+    TensorToTensorDictTransform,
+    shapes_to_slices,
+)
 
 
 class LinearScheduler:
@@ -54,11 +60,11 @@ class SCOTCHModule(LightningModule):
         context_size: int = 64,
         hidden_size: int = 128,
         kl_anneal_iters: int = 1000,
-        learning_rates: Optional[dict] = None,
+        learning_rates: dict | None = None,
         use_adjoint: bool = False,
         sde_method: str = "euler",
         dt: float = 1e-2,
-        noise_scale: Union[float, Tensor] = 0.01,
+        noise_scale: float | Tensor = 0.01,
         record_graph_logits: bool = True,
         lr_warmup_iters: int = 1,
         ignore_self_connections: bool = False,
@@ -136,7 +142,7 @@ class SCOTCHModule(LightningModule):
         self.compute_auroc = compute_auroc
         self.sigmoid_output = sigmoid_output
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         """Set up all components of the SCOTCH SDE model."""
         if self.is_setup:
             return  # Already setup

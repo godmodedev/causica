@@ -2,7 +2,9 @@ import torch
 from tensordict import TensorDict
 
 from causica.datasets.tensordict_utils import tensordict_shapes
-from causica.sem.temporal_distribution_parameters_sem import split_lagged_and_instanteneous_values
+from causica.sem.temporal_distribution_parameters_sem import (
+    split_lagged_and_instanteneous_values,
+)
 
 
 def test_split_lagged_and_instanteneous_values():

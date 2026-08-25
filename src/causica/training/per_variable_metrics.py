@@ -1,4 +1,5 @@
-from typing import Any, Iterable, Optional, Type, Union
+from collections.abc import Iterable
+from typing import Any
 
 from torch import Tensor
 from torchmetrics import Metric, MetricCollection
@@ -47,8 +48,8 @@ class MeanAbsolutePercentageErrorWithThreshold(MeanAbsolutePercentageError):
 def create_metrics_for_variables(
     variables: Iterable[str],
     metrics: MetricCollection,
-    min_thresholds: Optional[dict[str, float]] = None,
-    threshold_metrics: Optional[dict[str, Type[Metric]]] = None,
+    min_thresholds: dict[str, float] | None = None,
+    threshold_metrics: dict[str, type[Metric]] | None = None,
 ) -> MultitaskWrapper:
     """
     This function will create a MultiTaskWrapper obj with keys to be the variable names.
@@ -64,7 +65,7 @@ def create_metrics_for_variables(
         MultitaskWrapper obj with keys to be the variable names.
     """
 
-    metrics_dict: dict[str, Union[Metric, MetricCollection]] = {
+    metrics_dict: dict[str, Metric | MetricCollection] = {
         key: metrics.clone(postfix=f".{key}") for key in variables
     }
 
@@ -77,7 +78,7 @@ def create_metrics_for_variables(
     return MultitaskWrapper(metrics_dict)
 
 
-def filter_metrics_wrapper(variable_list: Optional[list[str]], metrics_wrapper: MultitaskWrapper) -> MultitaskWrapper:
+def filter_metrics_wrapper(variable_list: list[str] | None, metrics_wrapper: MultitaskWrapper) -> MultitaskWrapper:
     """
     This will filter the MultiTaskWrapper obj to select only the variables in variable_list. If None, the metrics will not be filtered.
 

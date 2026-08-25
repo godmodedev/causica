@@ -1,11 +1,16 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
 import torch.nn.functional as F
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
-from causica.triangular_transformations import fill_triangular, num_lower_tri_elements_to_n, unfill_triangular
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
+from causica.triangular_transformations import (
+    fill_triangular,
+    num_lower_tri_elements_to_n,
+    unfill_triangular,
+)
 
 
 class ThreeWayAdjacencyDistribution(AdjacencyDistribution):
@@ -21,7 +26,7 @@ class ThreeWayAdjacencyDistribution(AdjacencyDistribution):
 
     arg_constraints = {"logits": td.constraints.real}
 
-    def __init__(self, logits: torch.Tensor, validate_args: Optional[bool] = None):
+    def __init__(self, logits: torch.Tensor, validate_args: bool | None = None):
         """
         Args:
             logits: An array of size (..., n(n-1)/2, 3), representing logit of i->j, j->i, no edge respectively.

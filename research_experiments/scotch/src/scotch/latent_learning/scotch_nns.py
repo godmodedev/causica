@@ -1,4 +1,5 @@
 import torch
+from causica.functional_relationships.icgnn import FGNNI as DECIEmbedNN
 from scotch.sdes.sde_modules import (
     ContextualDriftCoefficient,
     DiffusionCoefficient,
@@ -7,8 +8,6 @@ from scotch.sdes.sde_modules import (
 )
 from torch import Tensor, nn, vmap
 from torch.func import stack_module_state
-
-from causica.functional_relationships.icgnn import FGNNI as DECIEmbedNN
 
 
 class NeuralTrajectoryGraphEncoder(TrajectoryGraphEncoder):

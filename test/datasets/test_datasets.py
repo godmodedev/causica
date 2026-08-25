@@ -3,7 +3,10 @@ import pandas as pd
 import torch
 from tensordict import TensorDict
 
-from causica.datasets.causica_dataset_format import Variable, tensordict_from_variables_metadata
+from causica.datasets.causica_dataset_format import (
+    Variable,
+    tensordict_from_variables_metadata,
+)
 from causica.datasets.tensordict_utils import convert_one_hot, tensordict_from_pandas
 
 

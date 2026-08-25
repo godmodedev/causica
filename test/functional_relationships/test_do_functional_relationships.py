@@ -2,7 +2,10 @@ import pytest
 import torch
 from tensordict import TensorDict
 
-from causica.functional_relationships import LinearFunctionalRelationships, create_do_functional_relationship
+from causica.functional_relationships import (
+    LinearFunctionalRelationships,
+    create_do_functional_relationship,
+)
 
 
 @pytest.fixture(name="two_variable_dict")

@@ -2,7 +2,12 @@ import pytest
 import torch
 from tensordict import TensorDict, TensorDictBase
 
-from causica.datasets.tensordict_utils import expand_tensordict_groups, tensordict_shapes, unbind_values, unbound_items
+from causica.datasets.tensordict_utils import (
+    expand_tensordict_groups,
+    tensordict_shapes,
+    unbind_values,
+    unbound_items,
+)
 
 
 def _assert_tensordict_allclose(a: TensorDictBase, b: TensorDictBase) -> None:

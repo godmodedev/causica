@@ -7,7 +7,8 @@
 #
 # thanks!
 
-import torch.nn as nn
+from torch import nn
+
 from lvdm.utils.utils import instantiate_from_config
 
 

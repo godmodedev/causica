@@ -2,7 +2,9 @@ import pytest
 import torch
 import torch.distributions as td
 
-from causica.data_generation.samplers.functional_relationships_sampler import LinearRelationshipsSampler
+from causica.data_generation.samplers.functional_relationships_sampler import (
+    LinearRelationshipsSampler,
+)
 from causica.data_generation.samplers.noise_dist_sampler import (
     BernoulliNoiseModuleSampler,
     CategoricalNoiseModuleSampler,

@@ -1,5 +1,4 @@
 import abc
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -22,7 +21,7 @@ class AdjacencyDistribution(td.Distribution, abc.ABC):
 
     support = td.constraints.independent(td.constraints.boolean, 1)
 
-    def __init__(self, num_nodes: int, validate_args: Optional[bool] = None):
+    def __init__(self, num_nodes: int, validate_args: bool | None = None):
         assert num_nodes > 0, "Number of nodes in the graph must be greater than 0"
         self.num_nodes = num_nodes
         event_shape = torch.Size((num_nodes, num_nodes))

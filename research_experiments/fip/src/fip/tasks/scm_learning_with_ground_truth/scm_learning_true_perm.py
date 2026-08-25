@@ -1,7 +1,10 @@
-from typing import Optional
 
 import pytorch_lightning as pl
 import torch
+from fip.data_modules.numpy_tensor_data_module import NumpyTensorDataModule
+from fip.methods.scm_learning import SCMLearning
+from fip.task_utils.leaf_functions import graph_to_perm_torch
+from fip.task_utils.learnable_loss import LearnableGaussianLLH
 from torch import nn, optim
 
 from causica.graph.evaluation_metrics import (
@@ -10,10 +13,6 @@ from causica.graph.evaluation_metrics import (
     orientation_fallout_recall,
     orientation_precision_recall,
 )
-from fip.data_modules.numpy_tensor_data_module import NumpyTensorDataModule
-from fip.methods.scm_learning import SCMLearning
-from fip.task_utils.leaf_functions import graph_to_perm_torch
-from fip.task_utils.learnable_loss import LearnableGaussianLLH
 
 
 class SCMLearningTruePerm(pl.LightningModule):
@@ -89,7 +88,7 @@ class SCMLearningTruePerm(pl.LightningModule):
 
         self.save_hyperparameters()
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         _ = stage
         if self.is_setup:
             return  # Already setup

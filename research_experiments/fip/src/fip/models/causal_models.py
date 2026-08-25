@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 from torch import nn
@@ -69,13 +68,13 @@ class CausalTransformer(nn.Module):
         self.mask_type = mask_type
         self.max_seq_length = max_seq_length
 
-    def special_mask(self, dec_mask: torch.Tensor, special_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+    def special_mask(self, dec_mask: torch.Tensor, special_mask: torch.Tensor | None = None) -> torch.Tensor:
         if special_mask is not None:
             dec_mask = dec_mask & special_mask
 
         return dec_mask
 
-    def add_mask(self, dec_mask: torch.Tensor, added_mask: Optional[torch.Tensor] = None) -> torch.Tensor:
+    def add_mask(self, dec_mask: torch.Tensor, added_mask: torch.Tensor | None = None) -> torch.Tensor:
         """
         Args:
             added_mask: expected shape (1, max_seq_length, max_seq_length)
@@ -94,8 +93,8 @@ class CausalTransformer(nn.Module):
         self,
         tgt: torch.Tensor,
         noise: torch.Tensor,
-        special_mask: Optional[torch.Tensor] = None,
-        added_mask: Optional[torch.Tensor] = None,
+        special_mask: torch.Tensor | None = None,
+        added_mask: torch.Tensor | None = None,
     ) -> torch.Tensor:
         """
         Args:

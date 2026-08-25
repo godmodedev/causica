@@ -1,5 +1,4 @@
 import os
-from typing import Optional
 
 import fsspec
 import numpy as np
@@ -23,7 +22,7 @@ class DatasetCounterFactual(Dataset):
             num_interventions: Number of interventions
         """
 
-        self.true_graph: Optional[torch.Tensor]
+        self.true_graph: torch.Tensor | None
         graph_path = os.path.join(data_dir, "true_graph" + ".npy")
         if os.path.exists(graph_path):
             with fsspec.open(graph_path, "rb") as f:
@@ -93,9 +92,9 @@ class DatasetSingleTask(Dataset):
         self,
         data_path: str,
         standardize: bool,
-        mean_data: Optional[torch.Tensor] = None,
-        std_data: Optional[torch.Tensor] = None,
-        graph_path: Optional[str] = None,
+        mean_data: torch.Tensor | None = None,
+        std_data: torch.Tensor | None = None,
+        graph_path: str | None = None,
         split_data_noise: bool = False,
     ):
         """
@@ -107,7 +106,7 @@ class DatasetSingleTask(Dataset):
             graph_path (string): Path to the the graph.
             split_data_noise (bool): Whether to split the data into observations and noise
         """
-        self.true_graph: Optional[torch.Tensor]
+        self.true_graph: torch.Tensor | None
         if graph_path is not None:
             with fsspec.open(graph_path, "rb") as f:
                 self.true_graph = torch.tensor(np.load(f), dtype=torch.long)

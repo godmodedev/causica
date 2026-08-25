@@ -2,7 +2,6 @@ from abc import abstractmethod
 from functools import partial
 
 import torch
-import torch.nn as nn
 import torch.nn.functional as F
 from avid_utils.helpers import prob_mask_like
 from einops import rearrange
@@ -10,6 +9,7 @@ from lvdm.basics import avg_pool_nd, conv_nd, linear, normalization, zero_module
 from lvdm.common import checkpoint
 from lvdm.models.utils_diffusion import timestep_embedding
 from lvdm.modules.attention import SpatialTransformer, TemporalTransformer
+from torch import nn
 
 
 class TimestepBlock(nn.Module):
@@ -258,7 +258,7 @@ class TemporalConvBlock(nn.Module):
     """
 
     def __init__(self, in_channels, out_channels=None, dropout=0.0, spatial_aware=False):
-        super(TemporalConvBlock, self).__init__()
+        super().__init__()
         if out_channels is None:
             out_channels = in_channels
         self.in_channels = in_channels
@@ -379,7 +379,7 @@ class UNetModel(nn.Module):
         default_fs=4,
         fs_condition=False,
     ):
-        super(UNetModel, self).__init__()
+        super().__init__()
         if num_heads == -1:
             assert num_head_channels != -1, "Either num_heads or num_head_channels has to be set"
         if num_head_channels == -1:

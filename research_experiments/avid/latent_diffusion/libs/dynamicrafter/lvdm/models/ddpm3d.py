@@ -21,7 +21,6 @@ import random
 
 import pytorch_lightning as pl
 import torch
-import torch.nn as nn
 from lvdm.basics import disabled_train
 from lvdm.common import default, exists, extract_into_tensor, noise_like
 from lvdm.distributions import DiagonalGaussianDistribution
@@ -30,7 +29,7 @@ from lvdm.models.samplers.ddim import DDIMSampler
 from lvdm.models.utils_diffusion import make_beta_schedule, rescale_zero_terminal_snr
 from lvdm.utils.utils import instantiate_from_config
 from pytorch_lightning.utilities import rank_zero_only
-from torch.optim.lr_scheduler import CosineAnnealingLR, LambdaLR
+from torch import nn
 from torchvision.utils import make_grid
 
 __conditioning_keys__ = {"concat": "c_concat", "crossattn": "c_crossattn", "adm": "y"}
@@ -223,7 +222,7 @@ class DDPM(pl.LightningModule):
         for k in keys:
             for ik in ignore_keys:
                 if k.startswith(ik):
-                    mainlogger.info("Deleting key {} from state_dict.".format(k))
+                    mainlogger.info(f"Deleting key {k} from state_dict.")
                     del sd[k]
         missing, unexpected = (
             self.load_state_dict(sd, strict=False) if not only_model else self.model.load_state_dict(sd, strict=False)
@@ -307,7 +306,7 @@ class DDPM(pl.LightningModule):
         b = shape[0]
         img = torch.randn(shape, device=device)
         intermediates = [img]
-        for i in tqdm(reversed(range(0, self.num_timesteps)), desc="Sampling t", total=self.num_timesteps):
+        for i in tqdm(reversed(range(self.num_timesteps)), desc="Sampling t", total=self.num_timesteps):
             img = self.p_sample(
                 img, torch.full((b,), i, device=device, dtype=torch.long), clip_denoised=self.clip_denoised
             )
@@ -1069,9 +1068,9 @@ class LatentDiffusion(DDPM):
             timesteps = min(timesteps, start_T)
 
         iterator = (
-            tqdm(reversed(range(0, timesteps)), desc="Sampling t", total=timesteps)
+            tqdm(reversed(range(timesteps)), desc="Sampling t", total=timesteps)
             if verbose
-            else reversed(range(0, timesteps))
+            else reversed(range(timesteps))
         )
 
         if mask is not None:

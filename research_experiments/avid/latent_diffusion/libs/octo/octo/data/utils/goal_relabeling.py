@@ -4,6 +4,7 @@ Each function should add entries to the "task" dict.
 """
 
 import tensorflow as tf
+
 from octo.data.utils.data_utils import tree_merge
 
 

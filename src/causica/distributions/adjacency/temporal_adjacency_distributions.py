@@ -1,5 +1,4 @@
 import abc
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -7,7 +6,9 @@ import torch.nn.functional as F
 from torch import nn
 from torch.distributions.utils import logits_to_probs
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 from causica.distributions.distribution_module import DistributionModule
 from causica.distributions.gumbel_binary import gumbel_softmax_binary
 
@@ -26,7 +27,7 @@ class LaggedAdjacencyDistribution(AdjacencyDistribution, abc.ABC):
     For multple samples, the shape will be sample_shape + batch_shape + (lags, num_nodes, num_nodes)
     """
 
-    def __init__(self, num_nodes: int, lags: int, validate_args: Optional[bool] = None):
+    def __init__(self, num_nodes: int, lags: int, validate_args: bool | None = None):
         assert lags > 0, "Number of lags must be greater than 0"
         self.lags = lags
         assert num_nodes > 0, "Number of nodes in the graph must be greater than 0"
@@ -53,8 +54,8 @@ class TemporalAdjacencyDistribution(td.Distribution):
     def __init__(
         self,
         instantaneous_distribution: AdjacencyDistribution,
-        lagged_distribution: Optional[LaggedAdjacencyDistribution],
-        validate_args: Optional[bool] = None,
+        lagged_distribution: LaggedAdjacencyDistribution | None,
+        validate_args: bool | None = None,
     ):
         """
         Args:
@@ -196,7 +197,7 @@ class RhinoLaggedAdjacencyDistribution(LaggedAdjacencyDistribution):
         self,
         logits_edge: torch.Tensor,
         lags: int,
-        validate_args: Optional[bool] = None,
+        validate_args: bool | None = None,
     ):
         """
         Args:
@@ -349,7 +350,7 @@ class TemporalAdjacencyDistributionModule(DistributionModule[TemporalAdjacencyDi
     def __init__(
         self,
         inst_dist_module: DistributionModule[AdjacencyDistribution],
-        lagged_dist_module: Optional[DistributionModule[LaggedAdjacencyDistribution]],
+        lagged_dist_module: DistributionModule[LaggedAdjacencyDistribution] | None,
     ) -> None:
         """
         Args:

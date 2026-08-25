@@ -1,6 +1,10 @@
 import argparse
 
-from fip.launchers.basic_commands import generate_path_logging, generate_time_name, launch_job
+from fip.launchers.basic_commands import (
+    generate_path_logging,
+    generate_time_name,
+    launch_job,
+)
 
 path_config: str = "./src/fip/config/amortization/leaf_prediction.yaml"
 path_data: str = "./src/fip/config/synthetic_data_module.yaml"

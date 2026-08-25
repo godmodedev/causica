@@ -1,6 +1,7 @@
 from collections import defaultdict
+from collections.abc import Callable, Iterable, Mapping
 from enum import Enum
-from typing import Any, Callable, Iterable, Mapping, Optional, TypeVar
+from typing import Any, TypeVar
 
 import torch
 from tensordict import TensorDict
@@ -73,7 +74,7 @@ class JointNoise(Noise[TensorDict]):
         return torch.sum(torch.stack(log_probs, dim=0), dim=0)
 
     @property
-    def support(self) -> dict[str, Optional[Any]]:
+    def support(self) -> dict[str, Any | None]:
         return {name: noise_dist.support for name, noise_dist in self._independent_noise_dists.items()}
 
     @property
@@ -156,7 +157,7 @@ class JointNoiseModule(NoiseModule[JointNoise]):
         super().__init__()
         self.noise_modules = nn.ModuleDict(independent_noise_modules)
 
-    def forward(self, x: Optional[tuple[TensorDict, TensorDict] | TensorDict] = None) -> JointNoise:
+    def forward(self, x: tuple[TensorDict, TensorDict] | TensorDict | None = None) -> JointNoise:
         """
         Some noise_module allows to access to tuple of two Tensors rather than a single Tensor (e.g. univariate_normal, univariate_laplace, univariate_cauchy)
         Note that if a tuple is provided to a noise_module that does not allow tuple of tensor, this forward call will raise an error.

@@ -66,7 +66,7 @@ def tensor2videogrids(video, root, filename, fps, rescale=True, clamp=True):
 
 def log_local(batch_logs, save_dir, filename, save_fps=10, rescale=True):
     if batch_logs is None:
-        return None
+        return
     """ save images and videos from images dict """
 
     def save_img_grid(grid, path, rescale):
@@ -84,8 +84,7 @@ def log_local(batch_logs, save_dir, filename, save_fps=10, rescale=True):
             ## a batch of captions
             path = os.path.join(save_dir, "%s-%s.txt" % (key, filename))
             with open(path, "w") as f:
-                for i, txt in enumerate(value):
-                    f.write(f"idx={i}, txt={txt}\n")
+                f.writelines(f"idx={i}, txt={txt}\n" for i, txt in enumerate(value))
                 f.close()
         elif isinstance(value, torch.Tensor) and value.dim() == 5:
             ## save video grids
@@ -96,7 +95,7 @@ def log_local(batch_logs, save_dir, filename, save_fps=10, rescale=True):
             n = video.shape[0]
             video = video.permute(2, 0, 1, 3, 4)  # t,n,c,h,w
             frame_grids = [
-                torchvision.utils.make_grid(framesheet, nrow=int(1), padding=0) for framesheet in video
+                torchvision.utils.make_grid(framesheet, nrow=1, padding=0) for framesheet in video
             ]  # [3, n*h, 1*w]
             grid = torch.stack(frame_grids, dim=0)  # stack in temporal dim [t, 3, n*h, w]
             if rescale:

@@ -2,12 +2,11 @@ import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
 from avid_utils.image import preprocess_images
+from dwma.models.classifier import GaussianNoiseActionClassifier
 from einops import rearrange
 from torch import nn
 from torch.optim import Adam
 from torchmetrics import Accuracy
-
-from dwma.models.classifier import GaussianNoiseActionClassifier
 
 
 class ClassifierModule(pl.LightningModule):

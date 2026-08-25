@@ -1,10 +1,12 @@
+from collections.abc import Callable
 from functools import partial
-from typing import Callable, Optional, Type, Union
 
 import torch
 import torch.distributions as td
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 from causica.distributions.adjacency.temporal_adjacency_distributions import (
     LaggedAdjacencyDistribution,
     TemporalAdjacencyDistribution,
@@ -168,7 +170,7 @@ class TemporalConstrainedAdjacencyDistribution(TemporalAdjacencyDistribution):
         dist: TemporalAdjacencyDistribution,
         positive_constraints: torch.Tensor,
         negative_constraints: torch.Tensor,
-        validate_args: Optional[bool] = None,
+        validate_args: bool | None = None,
     ):
         """
         Args:
@@ -258,11 +260,11 @@ def get_temporal_graph_constraint(temporal_graph_constraint_matrix: torch.Tensor
 
 
 def _create_distribution(
-    dist_class: Type[Union[AdjacencyDistribution, TemporalAdjacencyDistribution]],
+    dist_class: type[AdjacencyDistribution | TemporalAdjacencyDistribution],
     *args,
     graph_constraint_matrix: torch.Tensor,
     **kwargs,
-) -> Union[ConstrainedAdjacencyDistribution, TemporalConstrainedAdjacencyDistribution]:
+) -> ConstrainedAdjacencyDistribution | TemporalConstrainedAdjacencyDistribution:
     """Utility function for generating a constrained adjacency distribution with a base distribution.
 
     Args:
@@ -292,8 +294,8 @@ def _create_distribution(
 
 
 def constrained_adjacency(
-    dist_class: Type[Union[AdjacencyDistribution, TemporalAdjacencyDistribution]],
-) -> Callable[..., Union[ConstrainedAdjacencyDistribution, TemporalConstrainedAdjacencyDistribution]]:
+    dist_class: type[AdjacencyDistribution | TemporalAdjacencyDistribution],
+) -> Callable[..., ConstrainedAdjacencyDistribution | TemporalConstrainedAdjacencyDistribution]:
     """Utility function that returns a function constructing a (temporal) constrained adjacency distribution.
 
     Args:

@@ -8,7 +8,11 @@ from einops import rearrange
 from rotary_embedding_torch import RotaryEmbedding
 from torch import nn
 
-from dwma.models.video_diffusion_pytorch.blocks import PreNorm, Residual, SinusoidalPosEmb
+from dwma.models.video_diffusion_pytorch.blocks import (
+    PreNorm,
+    Residual,
+    SinusoidalPosEmb,
+)
 from dwma.models.video_diffusion_pytorch.diffusion import get_beta_schedule_fn
 from dwma.models.video_diffusion_pytorch.unet3d import (
     Attention,

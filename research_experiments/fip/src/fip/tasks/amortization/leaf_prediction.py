@@ -1,11 +1,8 @@
 import math
-from typing import Optional
 
 import pytorch_lightning as pl
 import torch
 import torch.nn.functional as F
-from torch import optim
-
 from fip.models.amortized_models import AmortizedLeaf
 from fip.task_utils.leaf_functions import (
     decreasing_sig_to_perm,
@@ -14,6 +11,7 @@ from fip.task_utils.leaf_functions import (
     remove_leaf_nodes,
     vote_leaf_predicition,
 )
+from torch import optim
 
 
 class LeafPrediction(pl.LightningModule):
@@ -41,7 +39,7 @@ class LeafPrediction(pl.LightningModule):
         max_num_leaf: int,
         distributed: bool = False,
         elimination_type: str = "self",
-        num_to_keep_training: Optional[int] | Optional[list[int]] = None,
+        num_to_keep_training: int | None | list[int] = None,
     ) -> None:
         """
         Args:

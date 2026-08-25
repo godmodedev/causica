@@ -1,9 +1,9 @@
 import kornia
 import open_clip
 import torch
-import torch.nn as nn
 from lvdm.common import autocast
 from lvdm.utils.utils import count_params
+from torch import nn
 from torch.utils.checkpoint import checkpoint
 from transformers import CLIPTextModel, CLIPTokenizer, T5EncoderModel, T5Tokenizer
 

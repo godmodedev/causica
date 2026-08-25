@@ -1,7 +1,5 @@
-from typing import Optional
 
 import torch
-
 from fip.methods.base_method_module import DifferentialCausalDiscovery
 from fip.models.causal_models import CausalTransformer
 
@@ -21,7 +19,7 @@ class SCMLearning(DifferentialCausalDiscovery):
         mask_type: str = "diag",
         attn_type: str = "causal",
         cost_type: str = "dot_product",
-        special_mask: Optional[torch.Tensor] = None,
+        special_mask: torch.Tensor | None = None,
     ):
         """
         Args:
@@ -118,7 +116,7 @@ class SCMLearning(DifferentialCausalDiscovery):
         std_data: torch.Tensor,
         idx_nodes: list[int] | int,
         val_nodes: torch.Tensor,
-        n_hat: Optional[torch.Tensor] = None,
+        n_hat: torch.Tensor | None = None,
     ) -> torch.Tensor:
         """Computes the ITE prediction for the given nodes and values."""
 

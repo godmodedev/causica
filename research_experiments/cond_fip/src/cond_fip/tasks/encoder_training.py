@@ -1,9 +1,8 @@
 import pytorch_lightning as pl
 import torch
+from cond_fip.models.amortized_models import AmortizedNoise
 from ema_pytorch import EMA
 from torch import nn, optim
-
-from cond_fip.models.amortized_models import AmortizedNoise
 
 
 class EncoderTraining(pl.LightningModule):

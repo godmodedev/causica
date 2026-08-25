@@ -18,7 +18,9 @@ from causica.data_generation.generate_data import (
     sample_treatment_and_effect,
     sample_treatment_given_effects,
 )
-from causica.data_generation.samplers.functional_relationships_sampler import LinearRelationshipsSampler
+from causica.data_generation.samplers.functional_relationships_sampler import (
+    LinearRelationshipsSampler,
+)
 from causica.data_generation.samplers.noise_dist_sampler import (
     BernoulliNoiseModuleSampler,
     CategoricalNoiseModuleSampler,
@@ -26,7 +28,12 @@ from causica.data_generation.samplers.noise_dist_sampler import (
     UnivariateNormalNoiseModuleSampler,
 )
 from causica.data_generation.samplers.sem_sampler import SEMSampler
-from causica.datasets.causica_dataset_format import DataEnum, Variable, VariablesMetadata, save_data
+from causica.datasets.causica_dataset_format import (
+    DataEnum,
+    Variable,
+    VariablesMetadata,
+    save_data,
+)
 from causica.distributions import ErdosRenyiDAGDistribution
 
 try:

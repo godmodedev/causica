@@ -1,8 +1,9 @@
-from typing import Optional
 
 import torch
 
-from causica.data_generation.samplers.functional_relationships_sampler import FunctionalRelationshipsSampler
+from causica.data_generation.samplers.functional_relationships_sampler import (
+    FunctionalRelationshipsSampler,
+)
 from causica.data_generation.samplers.noise_dist_sampler import JointNoiseModuleSampler
 from causica.data_generation.samplers.sampler import Sampler
 from causica.distributions import AdjacencyDistribution
@@ -17,7 +18,7 @@ class SEMSampler(Sampler[DistributionParametersSEM]):
         adjacency_dist: AdjacencyDistribution,
         joint_noise_module_sampler: JointNoiseModuleSampler,
         functional_relationships_sampler: FunctionalRelationshipsSampler,
-        log_functional_rescaling_sampler: Optional[FunctionalRelationshipsSampler] = None,
+        log_functional_rescaling_sampler: FunctionalRelationshipsSampler | None = None,
     ):
         self.adjacency_dist = adjacency_dist
         self.joint_noise_module_sampler = joint_noise_module_sampler

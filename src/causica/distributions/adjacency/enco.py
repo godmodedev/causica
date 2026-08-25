@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -6,7 +5,9 @@ import torch.nn.functional as F
 from torch import nn
 from torch.distributions.utils import logits_to_probs
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 from causica.distributions.distribution_module import DistributionModule
 from causica.distributions.gumbel_binary import gumbel_softmax_binary
 from causica.triangular_transformations import fill_triangular
@@ -34,7 +35,7 @@ class ENCOAdjacencyDistribution(AdjacencyDistribution):
         self,
         logits_exist: torch.Tensor,
         logits_orient: torch.Tensor,
-        validate_args: Optional[bool] = None,
+        validate_args: bool | None = None,
     ):
         """
         Args:

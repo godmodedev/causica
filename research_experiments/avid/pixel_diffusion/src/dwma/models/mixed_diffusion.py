@@ -2,7 +2,10 @@ from enum import Enum
 
 import torch
 
-from dwma.models.video_diffusion_pytorch.diffusion import GaussianDiffusion, ModelPrediction
+from dwma.models.video_diffusion_pytorch.diffusion import (
+    GaussianDiffusion,
+    ModelPrediction,
+)
 
 
 class CFGTypeEnum(Enum):

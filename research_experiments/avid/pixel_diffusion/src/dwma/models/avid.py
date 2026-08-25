@@ -8,7 +8,10 @@ from einops import rearrange, reduce
 from torch import nn
 
 from dwma.models.control_net import zero_module
-from dwma.models.video_diffusion_pytorch.diffusion import GaussianDiffusion, ModelPrediction
+from dwma.models.video_diffusion_pytorch.diffusion import (
+    GaussianDiffusion,
+    ModelPrediction,
+)
 from dwma.models.video_diffusion_pytorch.unet3d import Unet3D
 
 

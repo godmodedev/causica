@@ -4,7 +4,10 @@ import pytorch_lightning as pl
 import torch
 from tensordict import TensorDict
 
-from causica.datasets.causica_dataset_format import CounterfactualWithEffects, InterventionWithEffects
+from causica.datasets.causica_dataset_format import (
+    CounterfactualWithEffects,
+    InterventionWithEffects,
+)
 
 
 class VariableSpecModule(pl.LightningModule, abc.ABC):

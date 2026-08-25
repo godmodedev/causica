@@ -5,7 +5,11 @@ from functools import partial
 import torch
 import torch.nn.functional as F
 from avid_utils.helpers import default, extract
-from avid_utils.normalization import identity, normalize_to_neg_one_to_one, unnormalize_to_zero_to_one
+from avid_utils.normalization import (
+    identity,
+    normalize_to_neg_one_to_one,
+    unnormalize_to_zero_to_one,
+)
 from einops import rearrange, reduce
 from torch import nn
 from torch.cuda.amp import autocast
@@ -286,9 +290,9 @@ class GaussianDiffusion(nn.Module):
         imgs = [img]
         infos = []
 
-        for t in tqdm(reversed(range(0, self.num_timesteps)), desc="sampling loop time step", total=self.num_timesteps):
+        for t in tqdm(reversed(range(self.num_timesteps)), desc="sampling loop time step", total=self.num_timesteps):
             img, _, info = self.p_sample(img, t, cond_frames=cond_frames, act=act, cond_drop_prob=cond_drop_prob)
-            imgs.append(img)  #
+            imgs.append(img)
             infos.append(info)
 
         ret = img if not return_all_timesteps else torch.stack(imgs, dim=1)

@@ -1,12 +1,11 @@
 """This file implements the functional relationship required for SCOTCH"""
-from typing import Optional, Type
 
 import torch
+from causica.functional_relationships.icgnn import FGNNI, generate_fully_connected
+from causica.functional_relationships.icgnn import (
+    ICGNN as DECIEmbedFunctionalRelationships,
+)
 from torch import nn
-
-from causica.functional_relationships.icgnn import FGNNI
-from causica.functional_relationships.icgnn import ICGNN as DECIEmbedFunctionalRelationships
-from causica.functional_relationships.icgnn import generate_fully_connected
 
 
 class SCOTCHFunctionalRelationships(DECIEmbedFunctionalRelationships):
@@ -15,9 +14,9 @@ class SCOTCHFunctionalRelationships(DECIEmbedFunctionalRelationships):
     def __init__(
         self,
         shapes: dict[str, torch.Size],
-        embedding_size: Optional[int] = None,
-        out_dim_g: Optional[int] = None,
-        norm_layer: Optional[Type[nn.LayerNorm]] = None,
+        embedding_size: int | None = None,
+        out_dim_g: int | None = None,
+        norm_layer: type[nn.LayerNorm] | None = None,
         res_connection: bool = False,
         sigmoid_output: bool = False,
     ):
@@ -46,9 +45,9 @@ class SCOTCHFGNNI(FGNNI):
     def __init__(
         self,
         group_mask: torch.Tensor,
-        embedding_size: Optional[int] = None,
-        out_dim_g: Optional[int] = None,
-        norm_layer: Optional[Type[nn.LayerNorm]] = None,
+        embedding_size: int | None = None,
+        out_dim_g: int | None = None,
+        norm_layer: type[nn.LayerNorm] | None = None,
         res_connection: bool = False,
         sigmoid_output: bool = False,
     ):

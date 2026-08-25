@@ -4,7 +4,9 @@ import numpy as np
 import torch
 import torch.distributions as td
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 from causica.triangular_transformations import fill_triangular
 
 

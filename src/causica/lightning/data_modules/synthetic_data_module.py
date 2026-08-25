@@ -1,6 +1,6 @@
 import inspect
 from collections import defaultdict
-from typing import Callable
+from collections.abc import Callable
 
 import pytorch_lightning as pl
 from torch.utils.data import ConcatDataset, DataLoader

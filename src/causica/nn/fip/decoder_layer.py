@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 from torch import nn
@@ -41,7 +40,7 @@ class CausalDecoderLayer(nn.Module):
         self.max_seq_length = max_seq_length
 
     def forward(
-        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor]
+        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: torch.Tensor | None
     ) -> torch.Tensor:
 
         """
@@ -101,7 +100,7 @@ class AmortizedDecoderLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(
-        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor]
+        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: torch.Tensor | None
     ) -> torch.Tensor:
 
         """

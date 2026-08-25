@@ -1,7 +1,12 @@
 import json
 
 import pytorch_lightning as pl
-from pytorch_lightning.cli import LightningArgumentParser, LightningCLI, Namespace, SaveConfigCallback
+from pytorch_lightning.cli import (
+    LightningArgumentParser,
+    LightningCLI,
+    Namespace,
+    SaveConfigCallback,
+)
 from pytorch_lightning.loggers import WandbLogger
 
 

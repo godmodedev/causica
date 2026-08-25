@@ -5,9 +5,14 @@ from torch.distributions.constraints import Constraint
 from causica.distributions.adjacency import AdjacencyDistribution
 from causica.distributions.distribution_module import DistributionModule
 from causica.distributions.noise.joint import JointNoiseModule
-from causica.functional_relationships import FunctionalRelationships, TemporalEmbedFunctionalRelationships
+from causica.functional_relationships import (
+    FunctionalRelationships,
+    TemporalEmbedFunctionalRelationships,
+)
 from causica.sem.distribution_parameters_sem import DistributionParametersSEM
-from causica.sem.temporal_distribution_parameters_sem import TemporalDistributionParametersSEM
+from causica.sem.temporal_distribution_parameters_sem import (
+    TemporalDistributionParametersSEM,
+)
 
 
 class SEMDistribution(td.Distribution):

@@ -1,6 +1,10 @@
 import argparse
 
-from fip.launchers.basic_commands import generate_path_logging, generate_time_name, launch_job
+from fip.launchers.basic_commands import (
+    generate_path_logging,
+    generate_time_name,
+    launch_job,
+)
 
 
 def get_path_pretrained_encoder(run_id: str, dir_model: str):

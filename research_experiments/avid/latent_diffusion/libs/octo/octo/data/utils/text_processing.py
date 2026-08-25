@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional, Sequence
+from collections.abc import Sequence
 
 import numpy as np
 import tensorflow as tf
@@ -21,7 +21,7 @@ class HFTokenizer(TextProcessor):
     def __init__(
         self,
         tokenizer_name: str,
-        tokenizer_kwargs: Optional[dict] = {
+        tokenizer_kwargs: dict | None = {
             "max_length": 64,
             "padding": "max_length",
             "truncation": True,
@@ -64,7 +64,7 @@ class MuseEmbedding(TextProcessor):
 class CLIPTextProcessor(TextProcessor):
     def __init__(
         self,
-        tokenizer_kwargs: Optional[dict] = {
+        tokenizer_kwargs: dict | None = {
             "max_length": 64,
             "padding": "max_length",
             "truncation": True,

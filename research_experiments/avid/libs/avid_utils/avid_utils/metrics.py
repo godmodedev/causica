@@ -1,14 +1,15 @@
 import numpy as np
 import pytorch_lightning as pl
 import torch
-from avid_utils.image import preprocess_images
-from avid_utils.video import resize_video
 from cdfvd import fvd
 from einops import rearrange
 from pytorch_fid.fid_score import calculate_frechet_distance
 from pytorch_fid.inception import InceptionV3
 from torchmetrics.image import StructuralSimilarityIndexMeasure
 from torchmetrics.image.lpip import LearnedPerceptualImagePatchSimilarity
+
+from avid_utils.image import preprocess_images
+from avid_utils.video import resize_video
 
 
 def update_running_mean(old_samples, old_mean, new_samples, new_mean):

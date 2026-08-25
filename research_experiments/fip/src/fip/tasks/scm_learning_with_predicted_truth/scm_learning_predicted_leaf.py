@@ -1,9 +1,13 @@
 import os
-from typing import List, Optional, cast
+from typing import cast
 
 import pytorch_lightning as pl
 import torch
 import yaml
+from fip.data_modules.numpy_tensor_data_module import NumpyTensorDataModule
+from fip.methods.scm_learning import SCMLearning
+from fip.task_utils.learnable_loss import LearnableGaussianLLH
+from fip.tasks.amortization.leaf_prediction import LeafPrediction
 from pytorch_lightning import Trainer
 from torch import nn, optim
 
@@ -13,10 +17,6 @@ from causica.graph.evaluation_metrics import (
     orientation_fallout_recall,
     orientation_precision_recall,
 )
-from fip.data_modules.numpy_tensor_data_module import NumpyTensorDataModule
-from fip.methods.scm_learning import SCMLearning
-from fip.task_utils.learnable_loss import LearnableGaussianLLH
-from fip.tasks.amortization.leaf_prediction import LeafPrediction
 
 
 class SCMLearningPredLeaf(pl.LightningModule):
@@ -106,7 +106,7 @@ class SCMLearningPredLeaf(pl.LightningModule):
 
         self.save_hyperparameters()
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         _ = stage
         if self.is_setup:
             return  # Already setup
@@ -139,7 +139,7 @@ class SCMLearningPredLeaf(pl.LightningModule):
         print("Metrics", metrics)
 
         pred_sig = trainer.predict(self.leaf_pred_model, datamodule=datamodule_eval_leaf_pred)
-        pred_sig = cast(List[torch.Tensor], pred_sig)
+        pred_sig = cast(list[torch.Tensor], pred_sig)
         self.pred_sig = pred_sig[0]
         print("Predicted topological ordering", self.pred_sig)
 

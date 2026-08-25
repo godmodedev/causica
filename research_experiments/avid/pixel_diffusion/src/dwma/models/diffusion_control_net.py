@@ -7,7 +7,10 @@ from avid_utils.normalization import identity
 from einops import rearrange, reduce
 
 from dwma.models.control_net import ControlledUnetModel, ControlNet
-from dwma.models.video_diffusion_pytorch.diffusion import GaussianDiffusion, ModelPrediction
+from dwma.models.video_diffusion_pytorch.diffusion import (
+    GaussianDiffusion,
+    ModelPrediction,
+)
 
 
 class GaussianDiffusionWithControlNet(GaussianDiffusion):

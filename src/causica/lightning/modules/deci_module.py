@@ -1,6 +1,7 @@
 import logging
+from collections.abc import Mapping, Sequence
 from dataclasses import asdict, is_dataclass
-from typing import Any, Mapping, Optional, Sequence, Union
+from typing import Any
 
 import fsspec
 import numpy as np
@@ -9,7 +10,10 @@ import torch
 from pytorch_lightning.utilities.types import STEP_OUTPUT
 from tensordict import TensorDict
 
-from causica.datasets.causica_dataset_format import CounterfactualWithEffects, InterventionWithEffects
+from causica.datasets.causica_dataset_format import (
+    CounterfactualWithEffects,
+    InterventionWithEffects,
+)
 from causica.distributions import (
     AdjacencyDistribution,
     ConstrainedAdjacency,
@@ -58,11 +62,11 @@ class DECIModule(VariableSpecModule):
         init_rho: float = 1.0,
         prior_sparsity_lambda: float = 0.05,
         gumbel_temp: float = 0.25,
-        auglag_config: Optional[AugLagLRConfig] = None,
-        expert_graph_container: Optional[ExpertGraphContainer] = None,
-        constraint_matrix_path: Optional[str] = None,
-        disable_auglag_epochs: Optional[int] = None,
-        test_metric_prefix: Optional[str] = "eval",
+        auglag_config: AugLagLRConfig | None = None,
+        expert_graph_container: ExpertGraphContainer | None = None,
+        constraint_matrix_path: str | None = None,
+        disable_auglag_epochs: int | None = None,
+        test_metric_prefix: str | None = "eval",
     ):
         """DECI Module
         Args:
@@ -92,14 +96,14 @@ class DECIModule(VariableSpecModule):
         self.disable_auglag_epochs = disable_auglag_epochs
         self.lr_scheduler = AugLagLR(config=self.auglag_config)
         self.constraint_matrix_path = constraint_matrix_path
-        self.constraint_matrix: Optional[torch.Tensor] = None
+        self.constraint_matrix: torch.Tensor | None = None
 
         self.embedding_size = embedding_size
         self.out_dim_g = out_dim_g
         self.num_layers_g = num_layers_g
         self.num_layers_zeta = num_layers_zeta
 
-        self.expert_graph_container: Optional[ExpertGraphContainer] = expert_graph_container
+        self.expert_graph_container: ExpertGraphContainer | None = expert_graph_container
 
         self.gumbel_temp = gumbel_temp
         self.is_setup = False
@@ -159,7 +163,7 @@ class DECIModule(VariableSpecModule):
             if self.variable_types is None:
                 self.variable_types = datamodule.variable_types
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
 
         _ = stage
         if self.is_setup:
@@ -244,7 +248,7 @@ class DECIModule(VariableSpecModule):
 
         return torch.optim.Adam(parameter_list)
 
-    def configure_callbacks(self) -> Union[Sequence[pl.Callback], pl.Callback]:
+    def configure_callbacks(self) -> Sequence[pl.Callback] | pl.Callback:
         """Create a callback for the auglag callback."""
         disabled_epochs = set(range(self.disable_auglag_epochs)) if self.disable_auglag_epochs else None
         return [AuglagLRCallback(self.lr_scheduler, log_auglag=True, disabled_epochs=disabled_epochs)]

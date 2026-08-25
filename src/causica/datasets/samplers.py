@@ -1,8 +1,8 @@
 import itertools
 import random
 import warnings
+from collections.abc import Iterable, Iterator
 from itertools import zip_longest
-from typing import Iterable, Iterator
 
 import torch
 from torch.utils.data import BatchSampler, Sampler, SubsetRandomSampler

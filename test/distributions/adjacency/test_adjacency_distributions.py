@@ -1,5 +1,4 @@
 """Module with generic Adjacency Distribution tests."""
-from typing import Optional, Type, Union
 
 import numpy as np
 import pytest
@@ -20,11 +19,11 @@ from causica.distributions.adjacency.temporal_adjacency_distributions import (
 
 
 def _distribution_factory(
-    dist_class: Type[Union[AdjacencyDistribution, TemporalAdjacencyDistribution, LaggedAdjacencyDistribution]],
+    dist_class: type[AdjacencyDistribution | TemporalAdjacencyDistribution | LaggedAdjacencyDistribution],
     num_nodes: int,
     batch_shape: torch.Size,
-    context_length: Optional[int] = None,
-) -> Union[AdjacencyDistribution, TemporalAdjacencyDistribution, LaggedAdjacencyDistribution]:
+    context_length: int | None = None,
+) -> AdjacencyDistribution | TemporalAdjacencyDistribution | LaggedAdjacencyDistribution:
     """Create a combined interface for producing Adjacency Distributions (allows us to use `parametrize` over them)"""
     if dist_class is ConstrainedAdjacencyDistribution:
         logits = torch.randn(batch_shape + ((num_nodes * (num_nodes - 1)) // 2, 3))
@@ -97,7 +96,7 @@ BATCH_SHAPES = [torch.Size(), (2,)]
 @pytest.mark.parametrize("dist_class", DIST_CLASSES)
 @pytest.mark.parametrize("batch_shape", BATCH_SHAPES)
 def test_support(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     batch_shape: torch.Size,
 ):
     """Test that the defined support works as expected. This method will be used to test other features."""
@@ -142,7 +141,7 @@ def test_support_lagged(batch_shape: torch.Size):
 
 @pytest.mark.parametrize("dist_class", TEMPORAL_DIST_CLASSES)
 @pytest.mark.parametrize("batch_shape", BATCH_SHAPES)
-def test_support_temporal(dist_class: Type[TemporalAdjacencyDistribution], batch_shape: torch.Size):
+def test_support_temporal(dist_class: type[TemporalAdjacencyDistribution], batch_shape: torch.Size):
     """Test that the defined support works as expected for temporal adjacency distribution.
 
     This method will be used to test other features.
@@ -167,7 +166,7 @@ def test_support_temporal(dist_class: Type[TemporalAdjacencyDistribution], batch
 @pytest.mark.parametrize(("num_nodes", "sample_shape"), [(3, tuple()), (4, (20,)), (2, (4, 5))])
 @pytest.mark.parametrize("dist_class", DIST_CLASSES)
 def test_sample_shape(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     num_nodes: int,
     sample_shape: torch.Size,
     relaxed_sample: bool,
@@ -215,7 +214,7 @@ def test_sample_shape_temporal(
     relaxed_sample: bool,
     batch_shape: torch.Size,
     context_length: int,
-    dist_class: Type[TemporalAdjacencyDistribution],
+    dist_class: type[TemporalAdjacencyDistribution],
 ):
     """Test the sample/rsample method returns binary tensors in the support of the correct shape for temporal distribution."""
 
@@ -233,7 +232,7 @@ def test_sample_shape_temporal(
 @pytest.mark.parametrize("sample_shape", [(2000,), (40, 50)])
 @pytest.mark.parametrize("dist_class", DIST_CLASSES)
 def test_sample_distinct(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     sample_shape: torch.Size,
     relaxed_sample: bool,
 ):
@@ -276,7 +275,7 @@ def test_sample_distinct_lagged(
 @pytest.mark.parametrize("dist_class", TEMPORAL_DIST_CLASSES)
 @pytest.mark.parametrize("context_length", [1, 3])
 def test_sample_distinct_temporal(
-    dist_class: Type[TemporalAdjacencyDistribution],
+    dist_class: type[TemporalAdjacencyDistribution],
     sample_shape: torch.Size,
     relaxed_sample: bool,
     context_length: int,
@@ -297,7 +296,7 @@ def test_sample_distinct_temporal(
 @pytest.mark.parametrize("batch_shape", BATCH_SHAPES)
 @pytest.mark.parametrize("dist_class", DIST_CLASSES)
 def test_mean(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     batch_shape: torch.Size,
 ):
     """Test basic properties of the means of the distributions"""
@@ -337,7 +336,7 @@ def test_mean_lagged(
 @pytest.mark.parametrize("dist_class", TEMPORAL_DIST_CLASSES)
 @pytest.mark.parametrize("context_length", [1, 3])
 def test_mean_temporal(
-    dist_class: Type[TemporalAdjacencyDistribution],
+    dist_class: type[TemporalAdjacencyDistribution],
     batch_shape: torch.Size,
     context_length: int,
 ):
@@ -355,7 +354,7 @@ def test_mean_temporal(
 @pytest.mark.parametrize("batch_shape", BATCH_SHAPES)
 @pytest.mark.parametrize("dist_class", DIST_CLASSES)
 def test_mode(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     batch_shape: torch.Size,
 ):
     """Test basic properties of the modes of the distributions"""
@@ -389,7 +388,7 @@ def test_mode_lagged(
 @pytest.mark.parametrize("dist_class", TEMPORAL_DIST_CLASSES)
 @pytest.mark.parametrize("context_length", [1, 3])
 def test_mode_temporal(
-    dist_class: Type[TemporalAdjacencyDistribution],
+    dist_class: type[TemporalAdjacencyDistribution],
     batch_shape: torch.Size,
     context_length: int,
 ):
@@ -407,7 +406,7 @@ def test_mode_temporal(
 @pytest.mark.parametrize("sample_shape", [tuple(), (2,), (3,)])
 @pytest.mark.parametrize("dist_class", DIST_CLASSES)
 def test_log_prob(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     batch_shape: torch.Size,
     sample_shape: torch.Size,
 ):
@@ -451,7 +450,7 @@ def test_log_prob_lagged(
 @pytest.mark.parametrize("dist_class", TEMPORAL_DIST_CLASSES)
 @pytest.mark.parametrize("context_length", [1, 3])
 def test_log_prob_temporal(
-    dist_class: Type[TemporalAdjacencyDistribution],
+    dist_class: type[TemporalAdjacencyDistribution],
     batch_shape: torch.Size,
     sample_shape: torch.Size,
     context_length: int,

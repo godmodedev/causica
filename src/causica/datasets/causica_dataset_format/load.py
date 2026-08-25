@@ -4,11 +4,11 @@ A module to load data from the standard directory structure (i.e. the one follow
 import json
 import logging
 import os
-from collections import defaultdict
+from collections import Counter, defaultdict
 from dataclasses import dataclass
 from enum import Enum
 from functools import partial
-from typing import Any, Counter, Optional
+from typing import Any
 
 import fsspec
 import numpy as np
@@ -24,7 +24,7 @@ CAUSICA_DATASETS_PATH = "https://azuastoragepublic.z6.web.core.windows.net/"
 
 
 InterventionWithEffects = tuple[InterventionData, InterventionData, set[str]]
-CounterfactualWithEffects = tuple[CounterfactualData, Optional[CounterfactualData], set[str]]
+CounterfactualWithEffects = tuple[CounterfactualData, CounterfactualData | None, set[str]]
 
 logger = logging.getLogger(__name__)
 
@@ -56,8 +56,8 @@ class Variable:
     group_name: str
     name: str
     type: VariableTypeEnum = VariableTypeEnum.CONTINUOUS
-    lower: Optional[float] = None
-    upper: Optional[float] = None
+    lower: float | None = None
+    upper: float | None = None
     always_observed: bool = True
 
 
@@ -72,7 +72,7 @@ class VariablesMetadata:
 def load_data(
     root_path: str,
     data_enum: DataEnum,
-    variables_metadata: Optional[VariablesMetadata] = None,
+    variables_metadata: VariablesMetadata | None = None,
     **storage_options: dict[str, Any],
 ):
     """

@@ -1,5 +1,12 @@
 from lvdm.ema import LitEma
-from lvdm.utils.train import get_env_vars, get_model, get_parser, get_trainer, prepare_logger, set_model_lr
+from lvdm.utils.train import (
+    get_env_vars,
+    get_model,
+    get_parser,
+    get_trainer,
+    prepare_logger,
+    set_model_lr,
+)
 from lvdm.utils.utils import instantiate_from_config
 from omegaconf import OmegaConf
 from pytorch_lightning import seed_everything

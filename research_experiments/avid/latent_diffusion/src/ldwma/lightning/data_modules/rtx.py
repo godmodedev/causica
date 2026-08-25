@@ -1,11 +1,10 @@
 import os
 
 import tensorflow as tf
-from pytorch_lightning import LightningDataModule
-from torch.utils.data import DataLoader
-
 from ldwma.datasets.rtx import get_rtx_tf_dataset
 from ldwma.datasets.utils import TensorFlowDatasetWrapper
+from pytorch_lightning import LightningDataModule
+from torch.utils.data import DataLoader
 
 
 class RTXDataModule(LightningDataModule):

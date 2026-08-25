@@ -2,8 +2,9 @@ import hashlib
 import json
 import logging
 import os
+from collections.abc import Callable, Sequence
 from enum import Enum
-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
+from typing import Any
 
 import dlimp as dl
 import fsspec
@@ -56,7 +57,7 @@ def make_neutral_actions(action: tf.Tensor, absolute_action_mask: tf.Tensor) -> 
     )
 
 
-def pprint_data_mixture(dataset_kwargs_list: List[Dict[str, Any]], dataset_weights: List[int]) -> None:
+def pprint_data_mixture(dataset_kwargs_list: list[dict[str, Any]], dataset_weights: list[int]) -> None:
     print("\n######################################################################################")
     print(f"# Loading the following {len(dataset_kwargs_list)} datasets (incl. sampling weight):{'': >24} #")
     for dataset_kwargs, weight in zip(dataset_kwargs_list, dataset_weights):
@@ -67,8 +68,8 @@ def pprint_data_mixture(dataset_kwargs_list: List[Dict[str, Any]], dataset_weigh
 
 def get_dataset_statistics(
     dataset: dl.DLataset,
-    hash_dependencies: Tuple[str, ...],
-    save_dir: Optional[str] = None,
+    hash_dependencies: tuple[str, ...],
+    save_dir: str | None = None,
 ) -> dict:
     """Either computes the statistics of a dataset or loads them from a cache file if this function has been
     called before with the same `hash_dependencies`. Currently, the statistics include the min/max/mean/std of
@@ -100,7 +101,7 @@ def get_dataset_statistics(
             metadata = json.loads(f.read())
             return metadata
     except FileNotFoundError:
-        logging.warn(f"Could not load dataset statistics from {path}, will generate and save statistics locally")
+        logging.warning(f"Could not load dataset statistics from {path}, will generate and save statistics locally")
 
     dataset = dataset.traj_map(
         lambda traj: {
@@ -152,7 +153,7 @@ def get_dataset_statistics(
     try:
         with fsspec.open(path, "w") as f:
             json.dump(metadata, f)
-    except (tf.errors.PermissionDeniedError, PermissionError, IOError):
+    except (OSError, tf.errors.PermissionDeniedError, PermissionError):
         logging.warning(f"Could not write dataset statistics to {path}. " f"Writing to {local_path} instead.")
         os.makedirs(os.path.dirname(local_path), exist_ok=True)
         with open(local_path, "w") as f:
@@ -346,7 +347,7 @@ def invert_gripper_actions(actions: tf.Tensor):
     return 1 - actions
 
 
-def relabel_actions(traj: Dict[str, Any]) -> Dict[str, Any]:
+def relabel_actions(traj: dict[str, Any]) -> dict[str, Any]:
     """Relabels the actions to use the reached proprio instead. Discards the last timestep of the
     trajectory (since we don't have a next state to compute the action.)
     """
@@ -365,7 +366,7 @@ def relabel_actions(traj: Dict[str, Any]) -> Dict[str, Any]:
     return traj_truncated
 
 
-def allocate_threads(n: Optional[int], weights: np.ndarray):
+def allocate_threads(n: int | None, weights: np.ndarray):
     """Allocates an integer number of threads across datasets based on weights. The final array sums to `n`,
     but each element is no less than 1. If `n` is None, then every dataset is assigned a value of AUTOTUNE.
     """

@@ -3,10 +3,9 @@ Contains observation-level transforms used in the octo data pipeline. These tran
 "observation" dictionary, and are applied at a per-frame level.
 """
 
-from typing import Callable, Mapping, Tuple, Union
+from collections.abc import Callable, Mapping
 
 import dlimp as dl
-import numpy as np
 import tensorflow as tf
 from absl import logging
 
@@ -19,7 +18,7 @@ def apply_image_preprocessing(obs: dict, function: Callable) -> dict:
     return obs
 
 
-def augment(obs: dict, seed: tf.Tensor, augment_kwargs: Union[dict, Mapping[str, dict]]) -> dict:
+def augment(obs: dict, seed: tf.Tensor, augment_kwargs: dict | Mapping[str, dict]) -> dict:
     """Augments images, skipping padding images."""
     image_names = {key[6:] for key in obs if key.startswith("image_")}
 
@@ -49,8 +48,8 @@ def augment(obs: dict, seed: tf.Tensor, augment_kwargs: Union[dict, Mapping[str,
 
 def decode_and_resize(
     obs: dict,
-    resize_size: Union[Tuple[int, int], Mapping[str, Tuple[int, int]]],
-    depth_resize_size: Union[Tuple[int, int], Mapping[str, Tuple[int, int]]],
+    resize_size: tuple[int, int] | Mapping[str, tuple[int, int]],
+    depth_resize_size: tuple[int, int] | Mapping[str, tuple[int, int]],
 ) -> dict:
     """Decodes images and depth images, and then optionally resizes them."""
     # just gets the part after "image_" or "depth_"

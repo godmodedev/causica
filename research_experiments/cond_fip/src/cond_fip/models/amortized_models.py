@@ -1,7 +1,9 @@
 import torch
+from cond_fip.models.decoder_layer import (
+    AdaptiveAmortizedDecoderLayer,
+    AmortizedDecoderLayer,
+)
 from torch import nn
-
-from cond_fip.models.decoder_layer import AdaptiveAmortizedDecoderLayer, AmortizedDecoderLayer
 
 
 class AmortizedEncoder(nn.Module):

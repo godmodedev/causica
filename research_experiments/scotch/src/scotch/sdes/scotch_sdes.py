@@ -1,6 +1,10 @@
 import torch
 import torchsde
-from scotch.sdes.sde_modules import ContextualDriftCoefficient, DiffusionCoefficient, GraphCoefficient
+from scotch.sdes.sde_modules import (
+    ContextualDriftCoefficient,
+    DiffusionCoefficient,
+    GraphCoefficient,
+)
 from scotch.sdes.sdes_core import SDE
 from torch import Tensor, nn
 

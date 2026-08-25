@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -89,7 +88,7 @@ class BernoulliNoiseModule(NoiseModule[IndependentNoise[BernoulliNoise]]):
 
         self.base_logits = nn.Parameter(init_base_logits)
 
-    def forward(self, x: Optional[torch.Tensor] = None) -> IndependentNoise[BernoulliNoise]:
+    def forward(self, x: torch.Tensor | None = None) -> IndependentNoise[BernoulliNoise]:
         if x is None:
             x = torch.zeros_like(self.base_logits)
         return IndependentNoise(BernoulliNoise(delta_logits=x, base_logits=self.base_logits), 1)

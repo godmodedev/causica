@@ -1,8 +1,9 @@
-from typing import Optional
 
 import torch
 
-from causica.functional_relationships.rff_functional_relationships import RFFFunctionalRelationships
+from causica.functional_relationships.rff_functional_relationships import (
+    RFFFunctionalRelationships,
+)
 
 
 class HeteroscedasticRFFFunctionalRelationships(RFFFunctionalRelationships):
@@ -18,10 +19,10 @@ class HeteroscedasticRFFFunctionalRelationships(RFFFunctionalRelationships):
         shapes: dict[str, torch.Size],
         initial_random_features: torch.Tensor,
         initial_coefficients: torch.Tensor,
-        initial_bias: Optional[torch.Tensor] = None,
-        initial_length_scales: Optional[torch.Tensor] = None,
-        initial_output_scales: Optional[torch.Tensor] = None,
-        initial_angles: Optional[torch.Tensor] = None,
+        initial_bias: torch.Tensor | None = None,
+        initial_length_scales: torch.Tensor | None = None,
+        initial_output_scales: torch.Tensor | None = None,
+        initial_angles: torch.Tensor | None = None,
         trainable: bool = False,
         log_scale: bool = False,
     ) -> None:

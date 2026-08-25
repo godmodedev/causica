@@ -1,11 +1,9 @@
-from typing import Optional
 
 import pytorch_lightning as pl
 import torch
+from cond_fip.tasks.cond_fip_training import CondFiPTraining
 from fip.data_modules.numpy_tensor_data_module import NumpyTensorDataModule
 from torch import nn
-
-from cond_fip.tasks.cond_fip_training import CondFiPTraining
 
 
 class CondFiPInference(pl.LightningModule):
@@ -45,7 +43,7 @@ class CondFiPInference(pl.LightningModule):
 
         self.is_setup = False
 
-    def setup(self, stage: Optional[str] = None):
+    def setup(self, stage: str | None = None):
         _ = stage
         if self.is_setup:
             return  # Already setup

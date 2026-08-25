@@ -1,6 +1,10 @@
 import argparse
 
-from fip.launchers.basic_commands import generate_path_logging, generate_time_name, launch_job
+from fip.launchers.basic_commands import (
+    generate_path_logging,
+    generate_time_name,
+    launch_job,
+)
 
 
 def generate_base_script(

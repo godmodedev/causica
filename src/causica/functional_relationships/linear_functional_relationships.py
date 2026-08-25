@@ -1,9 +1,10 @@
-from typing import Optional
 
 import torch
 from tensordict import TensorDict
 
-from causica.functional_relationships.functional_relationships import FunctionalRelationships
+from causica.functional_relationships.functional_relationships import (
+    FunctionalRelationships,
+)
 
 
 class LinearFunctionalRelationships(FunctionalRelationships):
@@ -15,7 +16,7 @@ class LinearFunctionalRelationships(FunctionalRelationships):
         self,
         shapes: dict[str, torch.Size],
         initial_linear_coefficient_matrix: torch.Tensor,
-        initial_bias: Optional[torch.Tensor] = None,
+        initial_bias: torch.Tensor | None = None,
         trainable: bool = False,
     ) -> None:
         """

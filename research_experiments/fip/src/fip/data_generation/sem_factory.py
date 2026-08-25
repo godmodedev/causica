@@ -1,9 +1,21 @@
 import math
 from itertools import product
-from typing import Optional
 
 import torch
 import torch.distributions as td
+from fip.data_generation.config_data import (
+    CauchyConfig,
+    ERConfig,
+    GaussianConfig,
+    GRGConfig,
+    HeteroscedasticRFFConfig,
+    LaplaceConfig,
+    LinearConfig,
+    RFFConfig,
+    SBMConfig,
+    SFConfig,
+    WSConfig,
+)
 
 from causica.data_generation.samplers.functional_relationships_sampler import (
     FunctionalRelationshipsSampler,
@@ -28,19 +40,6 @@ from causica.distributions.adjacency import (
 )
 from causica.distributions.noise.univariate_laplace import UnivariateLaplaceNoiseModule
 from causica.distributions.signed_uniform import signed_uniform_1d
-from fip.data_generation.config_data import (
-    CauchyConfig,
-    ERConfig,
-    GaussianConfig,
-    GRGConfig,
-    HeteroscedasticRFFConfig,
-    LaplaceConfig,
-    LinearConfig,
-    RFFConfig,
-    SBMConfig,
-    SFConfig,
-    WSConfig,
-)
 
 
 class UnivariateLaplaceNoiseModuleSampler(NoiseModuleSampler):
@@ -84,7 +83,7 @@ class MultivariateSignedUniform(td.Distribution):
         size: the size of the distribution
     """
 
-    def __init__(self, low: float, high: float, size: torch.Size, validate_args: Optional[bool] = None):
+    def __init__(self, low: float, high: float, size: torch.Size, validate_args: bool | None = None):
         self.one_dim_dist = signed_uniform_1d(low, high)
         self.size = size
         super().__init__(validate_args=validate_args)

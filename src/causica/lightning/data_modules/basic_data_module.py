@@ -5,7 +5,10 @@ import torch
 from tensordict import TensorDict
 from torch.utils.data import DataLoader
 
-from causica.datasets.causica_dataset_format import Variable, tensordict_from_variables_metadata
+from causica.datasets.causica_dataset_format import (
+    Variable,
+    tensordict_from_variables_metadata,
+)
 from causica.datasets.normalization import fit_standardizer
 from causica.datasets.tensordict_utils import identity, tensordict_shapes
 from causica.datasets.variable_types import VariableTypeEnum

@@ -24,7 +24,7 @@ def generate_path_logging(run_name: str, dir_model: str = "./src/fip/outputs"):
 
 
 def generate_num_workers_command(num_workers: int):
-    return f" --data.num_workers {str(num_workers)}"
+    return f" --data.num_workers {num_workers!s}"
 
 
 def run_local(

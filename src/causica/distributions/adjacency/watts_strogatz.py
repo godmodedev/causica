@@ -4,7 +4,9 @@ import igraph as ig
 import numpy as np
 import torch
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 
 
 class WattsStrogatzDAGDistribution(AdjacencyDistribution):

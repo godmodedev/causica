@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -71,7 +70,7 @@ class UnivariateNormalNoiseModule(NoiseModule[IndependentNoise[UnivariateNormalN
         self.log_scale = nn.Parameter(torch.full(torch.Size([dim]), init_log_scale))
 
     def forward(
-        self, x: Optional[tuple[torch.Tensor, torch.Tensor] | torch.Tensor] = None
+        self, x: tuple[torch.Tensor, torch.Tensor] | torch.Tensor | None = None
     ) -> IndependentNoise[UnivariateNormalNoise]:
 
         """

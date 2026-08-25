@@ -1,6 +1,6 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from typing import Any, Optional
+from typing import Any
 
 import mlflow
 import pytorch_lightning as pl
@@ -15,7 +15,7 @@ from causica.training.auglag import AugLagLossCalculator, AugLagLR
 class AuglagLRCallback(pl.Callback):
     """Wrapper Class to make the Auglag Learning Rate Scheduler compatible with Pytorch Lightning"""
 
-    def __init__(self, scheduler: AugLagLR, log_auglag: bool = False, disabled_epochs: Optional[set[int]] = None):
+    def __init__(self, scheduler: AugLagLR, log_auglag: bool = False, disabled_epochs: set[int] | None = None):
         """
         Args:
             scheduler: The auglag learning rate scheduler to wrap.

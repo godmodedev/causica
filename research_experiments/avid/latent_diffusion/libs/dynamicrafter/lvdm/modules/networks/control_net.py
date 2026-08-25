@@ -1,8 +1,7 @@
 import torch
-import torch.nn as nn
 from avid_utils.helpers import prob_mask_like
 from einops import rearrange
-from lvdm.basics import avg_pool_nd, conv_nd, linear, zero_module
+from lvdm.basics import conv_nd, linear, zero_module
 from lvdm.models.utils_diffusion import timestep_embedding
 from lvdm.modules.attention import SpatialTransformer, TemporalTransformer
 from lvdm.modules.networks.openaimodel3d import (
@@ -13,6 +12,7 @@ from lvdm.modules.networks.openaimodel3d import (
     UNetModel,
     UpsampleToSize,
 )
+from torch import nn
 
 
 class ControlNet(nn.Module):
@@ -55,7 +55,7 @@ class ControlNet(nn.Module):
         default_fs=4,
         fs_condition=False,
     ):
-        super(ControlNet, self).__init__()
+        super().__init__()
         if num_heads == -1:
             assert num_head_channels != -1, "Either num_heads or num_head_channels has to be set"
         if num_head_channels == -1:

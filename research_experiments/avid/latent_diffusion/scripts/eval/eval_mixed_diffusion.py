@@ -1,6 +1,7 @@
 import argparse
 
 import torch
+from ldwma.models.wrappers.mixed_diffusion import MixedDiffusionWrapper
 from lvdm.ema import LitEma
 from lvdm.models.samplers.ddim import DDIMSampler
 from lvdm.utils.eval import evaluate_and_log
@@ -8,8 +9,6 @@ from lvdm.utils.train import get_model
 from lvdm.utils.utils import instantiate_from_config
 from omegaconf import OmegaConf
 from pytorch_lightning import seed_everything
-
-from ldwma.models.wrappers.mixed_diffusion import MixedDiffusionWrapper
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

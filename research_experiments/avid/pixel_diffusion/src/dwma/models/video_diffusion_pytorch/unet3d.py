@@ -9,7 +9,11 @@ from einops_exts import rearrange_many
 from rotary_embedding_torch import RotaryEmbedding
 from torch import einsum, nn
 
-from dwma.models.video_diffusion_pytorch.blocks import PreNorm, Residual, SinusoidalPosEmb
+from dwma.models.video_diffusion_pytorch.blocks import (
+    PreNorm,
+    Residual,
+    SinusoidalPosEmb,
+)
 
 
 class RMSNorm3d(nn.Module):

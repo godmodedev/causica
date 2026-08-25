@@ -1,9 +1,8 @@
 import abc
 
 import torch
-from torch import nn
-
 from fip.methods.jacobian import compute_jacobian
+from torch import nn
 
 
 class DifferentialCausalDiscovery(nn.Module, abc.ABC):

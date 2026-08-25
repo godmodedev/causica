@@ -1,7 +1,10 @@
 import pytest
 import torch
 
-from causica.distributions.noise import UnivariateLaplaceNoise, UnivariateLaplaceNoiseModule
+from causica.distributions.noise import (
+    UnivariateLaplaceNoise,
+    UnivariateLaplaceNoiseModule,
+)
 
 
 @pytest.mark.parametrize(("batch", "dimension"), [(1, 10), (2, 5)])

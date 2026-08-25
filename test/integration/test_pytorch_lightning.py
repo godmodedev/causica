@@ -87,7 +87,7 @@ def test_pytorch_lightning_save_checkpoint(tmp_path):
         torch.testing.assert_close(value, module2_params[key])
     # check that the expert graph container is in the module params
     # by the above check it is preserved by checkpointing
-    assert "expert_graph_container.dag" in module1_params.keys()
+    assert "expert_graph_container.dag" in module1_params
     # check the constraint matrix is equal
     torch.testing.assert_close(module.constraint_matrix, module2.constraint_matrix)
 

@@ -1,8 +1,8 @@
 import argparse
 import os
 import random
+from collections.abc import Callable
 from enum import Enum
-from typing import Callable
 
 import numpy as np
 import torch

@@ -96,8 +96,8 @@ if __name__ == "__main__":
     )
 
     subf = "norm" if args.normalize else "unnorm"
-    ts = torch.load(f"data/netsim_processed/{subf}/times_{str(args.missing_prob)}_{args.seed}.pt")
-    training_data = torch.load(f"data/netsim_processed/{subf}/data_{str(args.missing_prob)}_{args.seed}.pt")
+    ts = torch.load(f"data/netsim_processed/{subf}/times_{args.missing_prob!s}_{args.seed}.pt")
+    training_data = torch.load(f"data/netsim_processed/{subf}/data_{args.missing_prob!s}_{args.seed}.pt")
     true_graph = torch.load(f"data/netsim_processed/{subf}/true_graph.pt")
 
     training_data = TensorDict(

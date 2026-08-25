@@ -1,6 +1,5 @@
 """This scripts is for Lorenz experiments."""
 import argparse
-import os
 
 import pytorch_lightning as pl
 import torch
@@ -110,10 +109,10 @@ if __name__ == "__main__":
 
     subf = "norm" if args.normalize else "unnorm"
     ts = torch.load(
-        f"data/lorenz96_processed/{args.dimension}/{subf}/times_{args.num_time_points}_{str(args.missing_prob)}_{args.seed}.pt"
+        f"data/lorenz96_processed/{args.dimension}/{subf}/times_{args.num_time_points}_{args.missing_prob!s}_{args.seed}.pt"
     )
     training_data = torch.load(
-        f"data/lorenz96_processed/{args.dimension}/{subf}/data_{args.num_time_points}_{str(args.missing_prob)}_{args.seed}.pt"
+        f"data/lorenz96_processed/{args.dimension}/{subf}/data_{args.num_time_points}_{args.missing_prob!s}_{args.seed}.pt"
     )
     true_graph = torch.load(f"data/lorenz96_processed/{args.dimension}/{subf}/true_graph.pt").to("cuda")
 

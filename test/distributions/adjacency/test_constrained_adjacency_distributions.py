@@ -1,10 +1,13 @@
-from typing import Type
 
 import pytest
 import torch
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
-from causica.distributions.adjacency.constrained_adjacency_distributions import constrained_adjacency
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
+from causica.distributions.adjacency.constrained_adjacency_distributions import (
+    constrained_adjacency,
+)
 from causica.distributions.adjacency.enco import ENCOAdjacencyDistribution
 from causica.distributions.adjacency.temporal_adjacency_distributions import (
     RhinoLaggedAdjacencyDistribution,
@@ -25,7 +28,7 @@ TEMPORAL_DIST_CLASSES = [TemporalAdjacencyDistribution]
 @pytest.mark.parametrize("force_edge_from_diagonal", [1, 2, 3])
 @pytest.mark.parametrize("exist_force_edge", [True, False])
 def test_constrained_adjacency(
-    dist_class: Type[AdjacencyDistribution],
+    dist_class: type[AdjacencyDistribution],
     num_nodes: int,
     force_edge_from_diagonal: int,
     exist_force_edge: bool,
@@ -74,7 +77,7 @@ def test_constrained_adjacency(
 @pytest.mark.parametrize("exist_force_edge", [True, False])
 @pytest.mark.parametrize("context_length", [1, 3])
 def test_temporal_constrained_adjacency(
-    dist_class: Type[TemporalAdjacencyDistribution],
+    dist_class: type[TemporalAdjacencyDistribution],
     num_nodes: int,
     force_edge_from_diagonal: int,
     exist_force_edge: bool,

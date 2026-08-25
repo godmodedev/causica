@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 from torch import nn
@@ -35,7 +34,7 @@ class AmortizedDecoderLayer(nn.Module):
         self.dropout = nn.Dropout(dropout)
 
     def forward(
-        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: Optional[torch.Tensor] = None
+        self, queries: torch.Tensor, keys: torch.Tensor, values: torch.Tensor, mask: torch.Tensor | None = None
     ) -> torch.Tensor:
 
         """
@@ -102,7 +101,7 @@ class AdaptiveAmortizedDecoderLayer(nn.Module):
         keys: torch.Tensor,
         values: torch.Tensor,
         condition: torch.Tensor,
-        mask: Optional[torch.Tensor] = None,
+        mask: torch.Tensor | None = None,
     ) -> torch.Tensor:
 
         """

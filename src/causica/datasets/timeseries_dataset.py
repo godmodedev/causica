@@ -1,4 +1,4 @@
-from typing import Type, TypeVar
+from typing import Self, TypeVar
 
 import fsspec
 import numpy as np
@@ -211,7 +211,7 @@ class IndexedTimeseriesDataset(Dataset):
         self._adjacency_matrix = adjacency_matrix
 
     @classmethod
-    def from_dense(cls: Type[CLS], data: torch.Tensor, lengths: torch.Tensor, **kwargs) -> CLS:
+    def from_dense(cls, data: torch.Tensor, lengths: torch.Tensor, **kwargs) -> Self:
         """Create an indexed timeseries dataset from a dense representation of data with variable lengths.
 
         With this representation each timeseries i contains the data of data[i, lengths[i]].

@@ -3,7 +3,10 @@ from collections.abc import Iterable
 
 import torch
 from pytorch_lightning.utilities.types import EVAL_DATALOADERS
-from scotch.scotch_utils.scotch_utils import check_temporal_tensordict_shapes, temporal_tensordict_shapes
+from scotch.scotch_utils.scotch_utils import (
+    check_temporal_tensordict_shapes,
+    temporal_tensordict_shapes,
+)
 from tensordict import TensorDict
 from torch import Tensor
 from torch.utils.data import DataLoader

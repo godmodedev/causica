@@ -1,8 +1,7 @@
 import os
 
-from pytorch_lightning import LightningDataModule
-
 from dwma.datasets.procgen_dataset import ProcgenDataLoader, ProcgenDataset
+from pytorch_lightning import LightningDataModule
 
 
 class ProcgenDataModule(LightningDataModule):

@@ -1,4 +1,3 @@
-from typing import Optional
 
 import torch
 import torch.distributions as td
@@ -6,7 +5,9 @@ import torch.nn.functional as F
 from torch import nn
 from torch.distributions.utils import logits_to_probs
 
-from causica.distributions.adjacency.adjacency_distributions import AdjacencyDistribution
+from causica.distributions.adjacency.adjacency_distributions import (
+    AdjacencyDistribution,
+)
 from causica.distributions.distribution_module import DistributionModule
 from causica.distributions.gumbel_binary import gumbel_softmax_binary
 
@@ -20,7 +21,7 @@ class BernoulliDigraphDistribution(AdjacencyDistribution):
 
     arg_constraints = {}
 
-    def __init__(self, logits: torch.Tensor, validate_args: Optional[bool] = None):
+    def __init__(self, logits: torch.Tensor, validate_args: bool | None = None):
         num_nodes = logits.shape[-1]
         super().__init__(num_nodes, validate_args=validate_args)
 

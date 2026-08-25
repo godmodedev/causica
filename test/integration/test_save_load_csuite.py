@@ -4,7 +4,13 @@ import tempfile
 import pytest
 import torch
 
-from causica.datasets.causica_dataset_format import CAUSICA_DATASETS_PATH, DataEnum, load_data, save_data, save_dataset
+from causica.datasets.causica_dataset_format import (
+    CAUSICA_DATASETS_PATH,
+    DataEnum,
+    load_data,
+    save_data,
+    save_dataset,
+)
 from causica.datasets.tensordict_utils import tensordict_shapes
 
 

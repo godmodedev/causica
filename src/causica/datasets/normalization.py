@@ -1,5 +1,6 @@
 """Module that provides data normalization functionality."""
-from typing import Any, Callable, Optional
+from collections.abc import Callable
+from typing import Any
 
 import torch
 import torch.distributions as td
@@ -7,7 +8,11 @@ from tensordict import TensorDictBase
 from torch import nn
 from torch.distributions import constraints
 
-from causica.distributions.transforms import JointTransformModule, SequentialTransformModule, TransformModule
+from causica.distributions.transforms import (
+    JointTransformModule,
+    SequentialTransformModule,
+    TransformModule,
+)
 
 Normalizer = TransformModule[TensorDictBase, TensorDictBase]
 FitNormalizerType = Callable[[TensorDictBase], Normalizer]
@@ -38,7 +43,7 @@ class LogTransform(TransformModule[torch.Tensor, torch.Tensor], td.Transform, Lo
 
     arg_constraints = {"offset": constraints.greater_than_eq(0)}
 
-    def __init__(self, offset: Optional[torch.Tensor]) -> None:
+    def __init__(self, offset: torch.Tensor | None) -> None:
         """
         Args:
             offset: the offset added to the single tensor
@@ -60,7 +65,7 @@ class LogTransform(TransformModule[torch.Tensor, torch.Tensor], td.Transform, Lo
 class Standardizer(TransformModule[torch.Tensor, torch.Tensor], td.AffineTransform, LoadNoneTensorMixin):
     """Standardizer module for a single variable, ie a single tensor."""
 
-    def __init__(self, mean: Optional[torch.Tensor], std: Optional[torch.Tensor], *args, **kwargs) -> None:
+    def __init__(self, mean: torch.Tensor | None, std: torch.Tensor | None, *args, **kwargs) -> None:
         """
         Args:
             mean: Mean of the variable
@@ -81,7 +86,7 @@ class Standardizer(TransformModule[torch.Tensor, torch.Tensor], td.AffineTransfo
 
 
 def fit_log_normalizer(
-    data: TensorDictBase, default_offset: float = 1.0, min_margin: float = 0.0, keys: Optional[list[str]] = None
+    data: TensorDictBase, default_offset: float = 1.0, min_margin: float = 0.0, keys: list[str] | None = None
 ) -> Normalizer:
     """Fits a log standardizer to the tensordict.
 
@@ -112,7 +117,7 @@ def fit_log_normalizer(
     return JointTransformModule({key: LogTransform(offset) for key, offset in offsets.items()})
 
 
-def fit_standardizer(data: TensorDictBase, keys: Optional[list[str]] = None) -> Normalizer:
+def fit_standardizer(data: TensorDictBase, keys: list[str] | None = None) -> Normalizer:
     """Return a standardizer that updates data to zero mean and unit standard deviation."""
     data = data.select(*keys) if keys else data
     means = data.apply(
@@ -163,7 +168,7 @@ def infer_compatible_log_normalizer_from_checkpoint(state_dict: dict[str, Any]) 
     """
     # Infer normalizers per variable from the checkpoint
     normalizers_dicts: dict[int, dict[str, TransformModule[torch.Tensor, torch.Tensor]]] = {0: {}, 1: {}}
-    for key in state_dict.keys():
+    for key in state_dict:
         if key.startswith("normalizer."):
             *_, variable_name, state_name = key.split(".")
             if state_name == "offset":
